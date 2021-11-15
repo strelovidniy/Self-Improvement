@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Self.Improvement.Data.Context;
+using Self.Improvement.Domain.Bot;
 
 namespace Self.Improvement.Web
 {
@@ -20,11 +21,10 @@ namespace Self.Improvement.Web
         {
             services.AddControllersWithViews();
 
+            services.Configure<ChatBotConfig>(Configuration.GetSection("ChatBotConfig"));
+
             services.AddDbContext<SelfImprovementContext>(
-                options =>
-                {
-                    options.UseSqlServer("name=ConnectionStrings:SelfImprovementDatabase");
-                });
+                options => options.UseSqlServer("name=ConnectionStrings:SelfImprovementDatabase"));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
@@ -46,6 +46,7 @@ namespace Self.Improvement.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -69,7 +70,6 @@ namespace Self.Improvement.Web
 
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
