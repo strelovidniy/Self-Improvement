@@ -1,6 +1,6 @@
 using System;
 
-namespace Self.Improvement.Web
+namespace Self.Improvement.Domain.Models
 {
     public class WeatherForecast
     {
