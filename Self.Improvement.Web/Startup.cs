@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Self.Improvement.Web.ServiceExtensions;
 
 namespace Self.Improvement.Web
 {
@@ -17,11 +18,15 @@ namespace Self.Improvement.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddServices();
+
+            services.ApplyConfigurations(Configuration);
+
+            services.ConfigureDbContext();
+
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +45,7 @@ namespace Self.Improvement.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -63,7 +69,6 @@ namespace Self.Improvement.Web
 
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace Bot
+namespace Self.Improvement.Domain.TelegramBot
 {
     public interface IBotHandlers
     {

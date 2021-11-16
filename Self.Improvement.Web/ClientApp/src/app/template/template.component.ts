@@ -9,4 +9,8 @@ export default class TemplateComponent {
     public onLoaded(): void {
         document.getElementById('container').style.opacity = '1';
     }
+
+    public onLoadingStarted(): void {
+        document.getElementById('container').style.opacity = '0';
+    }
 }

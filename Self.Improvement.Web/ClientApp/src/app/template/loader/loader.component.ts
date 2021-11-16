@@ -1,47 +1,50 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+import TemplateService from 'src/app/shared/services/template.service';
 
 @Component({
     selector: 'app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.css']
 })
-export default class LoaderComponent {
-    @Output() private loaded = new EventEmitter();
+export default class LoaderComponent implements OnInit, AfterViewInit, OnDestroy {
+    @Output() private loaded = new EventEmitter<void>();
+    @Output() private loadedingStarted = new EventEmitter<void>();
 
-    private progress: number;
+    private loadedSubscription: Subscription;
+    private startedSubscription: Subscription;
 
-    public visible: boolean;
+    public loading: boolean;
 
-    public getProgress(): number {
-        if (this.progress < 100) {
-            this.progress += 4;
-        } else {
-            this.fadeOut();
-        }
-
-        return this.visible ? this.progress : 0;
-    }
+    public constructor(
+        private templateService: TemplateService
+    ) { }
 
     public ngOnInit(): void {
-        this.progress = 0;
+        this.loadedSubscription = this.templateService.loaded.subscribe(() => this.fadeOut());
+        this.startedSubscription = this.templateService.started.subscribe(() => this.fadeIn());
     }
 
-    public async ngAfterViewInit(): Promise<void> {
-        await this.fadeIn();
+    public ngAfterViewInit(): void {
+        this.fadeIn();
     }
 
-    public async fadeIn(): Promise<void> {
-        document.getElementById('loader-wrapper').style.opacity = '1';
+    public ngOnDestroy(): void {
+        this.loadedSubscription.unsubscribe();
+        this.startedSubscription.unsubscribe();
+    }
+
+    public fadeIn(): void {
+        this.loading = true;
+
+        this.loadedingStarted.emit();
+    }
+
+    public async fadeOut(): Promise<void> {
+        this.loaded.emit();
 
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        this.visible = true;
-    }
-
-    public fadeOut(): void {
-        this.visible = false;
-
-        document.getElementById('loader-wrapper').style.opacity = '0';
-        this.loaded.emit();
+        this.loading = false;
     }
 }

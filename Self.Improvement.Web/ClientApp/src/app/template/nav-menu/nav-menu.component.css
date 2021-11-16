@@ -1,0 +1,3 @@
+.nav-option ::ng-deep.mat-list-item-content {
+    width: 200px;
+}

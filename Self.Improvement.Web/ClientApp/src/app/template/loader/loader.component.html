@@ -1,3 +1,3 @@
 <div id="loader-wrapper">
-    <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
+    <mat-progress-bar [mode]="loading ? 'indeterminate' : 'determinate'" [value]="100"></mat-progress-bar>
 </div>

@@ -1,4 +1,30 @@
-<app-loader (loaded)="onLoaded()"></app-loader>
-<div id="container" class="container">
-    <ng-content></ng-content>
-</div>
+<app-loader color="primary" (loaded)="onLoaded()" (loadedingStarted)="onLoadingStarted()"></app-loader>
+<mat-toolbar color="primary">
+    <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer color="accent" #drawer class="example-sidenav" mode="side">
+        <app-nav-menu></app-nav-menu>
+    </mat-drawer>
+
+    <mat-drawer-content class="content">
+        <div class="content-wrapper">
+            <div id="container">
+                <ng-content></ng-content>
+            </div>
+        </div>
+
+        <mat-spinner class="loading-spinner"></mat-spinner>
+    </mat-drawer-content>
+
+</mat-drawer-container>

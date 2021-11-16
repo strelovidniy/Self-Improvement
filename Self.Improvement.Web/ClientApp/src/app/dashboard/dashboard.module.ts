@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import HomeComponent from './home.component';
-import SharedModule from '../shared/shared.module';
 import AnimGuard from '../shared/guards/anim.guard';
+
+import SharedModule from '../shared/shared.module';
+import DashboardComponent from './dashboard.component';
 
 @NgModule({
     declarations: [
-        HomeComponent
+        DashboardComponent
     ],
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', component: HomeComponent, pathMatch: 'full', canDeactivate: [AnimGuard] },
+            { path: '', component: DashboardComponent, pathMatch: 'full', canDeactivate: [AnimGuard] },
         ]),
     ]
 })
