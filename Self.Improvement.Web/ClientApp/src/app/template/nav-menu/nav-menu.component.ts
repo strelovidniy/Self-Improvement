@@ -17,8 +17,8 @@ export default class NavMenuComponent {
             routerLink: '/dashboard'
         },
         {
-            name: 'Page 3',
-            routerLink: '/'
+            name: 'Chat',
+            routerLink: '/chat'
         },
         {
             name: 'Page 4',

@@ -1,0 +1,23 @@
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100vh - 1.25em - 120px);
+}
+
+.message-container {
+    display: flex;
+    flex-direction: row;
+    align-items: unset;
+}
+
+.message {
+    max-width: 80%;
+    width: fit-content;
+    margin-top: 10px;
+    justify-self: right;
+}
+
+.message-input {
+    width: 100%;
+}
