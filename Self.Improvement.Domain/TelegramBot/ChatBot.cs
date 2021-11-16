@@ -5,13 +5,13 @@ using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 
-namespace Self.Improvement.Domain.Bot
+namespace Self.Improvement.Domain.TelegramBot
 {
     public class ChatBot
     {
         #region Properties
 
-        public TelegramBotClient TgBotClient { get; set; }
+        public TelegramBotClient Client { get; set; }
         public CancellationTokenSource Cts { get; set; }
 
         #endregion
@@ -20,14 +20,14 @@ namespace Self.Improvement.Domain.Bot
 
         public void Init(string accessToken)
         {
-            TgBotClient = new TelegramBotClient(accessToken);
+            Client = new TelegramBotClient(accessToken);
             Cts = new CancellationTokenSource();
         }
 
         public void Start(Func<ITelegramBotClient, Update, CancellationToken, Task> updateHandler,
             Func<ITelegramBotClient, Exception, CancellationToken, Task> errorHandler)
         {
-            TgBotClient.StartReceiving(new DefaultUpdateHandler(updateHandler, errorHandler), Cts.Token);
+            Client.StartReceiving(new DefaultUpdateHandler(updateHandler, errorHandler), Cts.Token);
         }
 
         #endregion

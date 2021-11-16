@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Self.Improvement.Data.Context;
-using Self.Improvement.Domain.Bot;
+using Self.Improvement.Web.ServiceExtensions;
 
 namespace Self.Improvement.Web
 {
@@ -21,10 +19,11 @@ namespace Self.Improvement.Web
         {
             services.AddControllersWithViews();
 
-            services.Configure<ChatBotConfig>(Configuration.GetSection("ChatBotConfig"));
+            services.AddServices();
 
-            services.AddDbContext<SelfImprovementContext>(
-                options => options.UseSqlServer("name=ConnectionStrings:SelfImprovementDatabase"));
+            services.ApplyConfigurations(Configuration);
+
+            services.ConfigureDbContext();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
