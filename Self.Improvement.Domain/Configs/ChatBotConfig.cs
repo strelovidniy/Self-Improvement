@@ -1,4 +1,4 @@
-namespace Self.Improvement.Domain.Bot
+namespace Self.Improvement.Domain.Configs
 {
     public class ChatBotConfig
     {
