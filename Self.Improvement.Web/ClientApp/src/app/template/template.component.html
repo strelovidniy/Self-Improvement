@@ -17,10 +17,14 @@
         <app-nav-menu></app-nav-menu>
     </mat-drawer>
 
-    <div class="wrapper">
-        <div id="container">
-            <ng-content></ng-content>
+    <mat-drawer-content class="content">
+        <div class="content-wrapper">
+            <div id="container">
+                <ng-content></ng-content>
+            </div>
         </div>
-    </div>
+
+        <mat-spinner class="loading-spinner"></mat-spinner>
+    </mat-drawer-content>
 
 </mat-drawer-container>
