@@ -1,4 +1,11 @@
 #container {
     opacity: 0;
     transition: 500ms;
+    height: calc(100vh - 68px);
+    width: calc(100vw - 300px);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
 }
