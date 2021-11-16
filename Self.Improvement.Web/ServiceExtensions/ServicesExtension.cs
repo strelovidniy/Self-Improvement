@@ -12,7 +12,7 @@ namespace Self.Improvement.Web.ServiceExtensions
         public static void AddServices(this IServiceCollection services)
         {
             services.AddTransient<ITelegramService, TelegramService>();
-            services.AddTransient<ITelegraHandlersService, TelegramHandlersService>();
+            services.AddTransient<ITelegramHandlersService, TelegramHandlersService>();
             services.AddSingleton(provider => new ChatBot(provider.GetService<IOptions<ChatBotConfig>>()));
         }
     }
