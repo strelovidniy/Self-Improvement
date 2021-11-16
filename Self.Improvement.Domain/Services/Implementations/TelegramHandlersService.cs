@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Self.Improvement.Domain.Services.Interfaces;
 using Self.Improvement.Domain.TelegramBot;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
@@ -10,18 +11,18 @@ using Telegram.Bot.Types.Enums;
 
 namespace Self.Improvement.Domain.Services.Implementations
 {
-    public class TelegramHandlersService : ITelegraHandlersService
+    public class TelegramHandlersService : ITelegramHandlersService
     {
         #region Private Fields
 
         private readonly ILogger<TelegramHandlersService> _logger;
-        private readonly TelegramService _tgService;
+        private readonly ITelegramService _tgService;
 
         #endregion
 
         #region Constructors
 
-        public TelegramHandlersService(TelegramService tgService, ILogger<TelegramHandlersService> logger)
+        public TelegramHandlersService(ITelegramService tgService, ILogger<TelegramHandlersService> logger)
         {
             _tgService = tgService;
             _logger = logger;

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace Self.Improvement.Domain.TelegramBot
+namespace Self.Improvement.Domain.Services.Interfaces
 {
-    public interface ITelegraHandlersService
+    public interface ITelegramHandlersService
     {
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception,
             CancellationToken cancellationToken);
