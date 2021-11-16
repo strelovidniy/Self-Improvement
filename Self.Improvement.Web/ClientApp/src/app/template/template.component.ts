@@ -13,4 +13,8 @@ export default class TemplateComponent {
     public onLoadingStarted(): void {
         document.getElementById('container').style.opacity = '0';
     }
+
+    public referToTelegramBot(): void {
+        location.href = 'https://t.me/yours_improvement_bot';
+    }
 }
