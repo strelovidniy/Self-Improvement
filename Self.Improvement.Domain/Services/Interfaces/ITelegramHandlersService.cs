@@ -6,7 +6,7 @@ using Telegram.Bot.Types;
 
 namespace Self.Improvement.Domain.TelegramBot
 {
-    public interface IBotHandlers
+    public interface ITelegraHandlersService
     {
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception,
             CancellationToken cancellationToken);
