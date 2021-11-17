@@ -11,7 +11,7 @@ using Telegram.Bot.Types;
 namespace Self.Improvement.Web.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/v1/telegram-listener")]
     public class TelegramListenerController : BaseApiController
     {
         private readonly ChatBot _tgBot;
@@ -25,7 +25,7 @@ namespace Self.Improvement.Web.Controllers
             _tgHandler = tgHandler;
         }
         
-        [HttpPost]
+        [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
             _tgBot.Init(_accesToken.Value.AccessToken);
