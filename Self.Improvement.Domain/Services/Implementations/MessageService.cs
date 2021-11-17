@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Self.Improvement.Data.Infrastructure;
 using Self.Improvement.Domain.Services.Interfaces;
-using Telegram.Bot.Types;
 using Message = Self.Improvement.Data.Entities.Message;
 
 namespace Self.Improvement.Domain.Services.Implementations

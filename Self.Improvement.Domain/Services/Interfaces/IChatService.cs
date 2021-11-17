@@ -13,5 +13,6 @@ namespace Self.Improvement.Domain.Services.Interfaces
         public Task<IEnumerable<Chat>> GetUnreadChatsAsync();
         public Task<IEnumerable<Chat>> GetReadChatsAsync();
         public Task<Message> SendMessageAsync(Message message);
+        public Task<Message> ReceiveMessageAsync(Message message);
     }
 }

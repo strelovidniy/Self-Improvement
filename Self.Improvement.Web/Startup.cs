@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Self.Improvement.Domain.Hubs;
 using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
 
@@ -25,6 +26,19 @@ namespace Self.Improvement.Web
             services.ApplyConfigurations(Configuration);
 
             services.ConfigureDbContext();
+
+            services.AddSignalR();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("https://example.com")
+                        .AllowCredentials()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
@@ -56,8 +70,11 @@ namespace Self.Improvement.Web
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<SignalRHub>("api/v1/chats/messages-hub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
