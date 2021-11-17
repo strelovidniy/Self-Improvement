@@ -9,9 +9,15 @@ namespace Self.Improvement.Domain.Services.Implementations
 {
     public class TelegramService : ITelegramService
     {
+        #region Fields
+
         private readonly ChatBot _bot;
         private readonly IOptions<ChatBotConfig> _accesToken;
         private readonly ITelegramHandlersService _tgHandler;
+
+        #endregion
+
+        #region Ctor
 
         public TelegramService(ChatBot bot, IOptions<ChatBotConfig> accesToken, ITelegramHandlersService tgHandler)
         {
@@ -20,10 +26,17 @@ namespace Self.Improvement.Domain.Services.Implementations
             _tgHandler = tgHandler;
         }
 
+        #endregion
+
+        #region Public Methods
+
         public void StartTelegramBot()
         {
             _bot.Init(_accesToken.Value.AccessToken);
             _bot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
         }
+
+        #endregion
+        
     }
 }

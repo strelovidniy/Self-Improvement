@@ -6,9 +6,6 @@ using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Implementations;
 using Self.Improvement.Domain.Services.Interfaces;
 using Self.Improvement.Domain.TelegramBot;
-using Telegram.Bot.Types;
-using Message = Self.Improvement.Data.Entities.Message;
-using User = Self.Improvement.Data.Entities.User;
 
 namespace Self.Improvement.Web.ServiceExtensions
 {
