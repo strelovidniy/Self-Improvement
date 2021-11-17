@@ -16,15 +16,13 @@ namespace Self.Improvement.Domain.Services.Implementations
         #region Private Fields
 
         private readonly ILogger<TelegramHandlersService> _logger;
-        private readonly ITelegramService _tgService;
 
         #endregion
 
         #region Constructors
 
-        public TelegramHandlersService(ITelegramService tgService, ILogger<TelegramHandlersService> logger)
+        public TelegramHandlersService(ILogger<TelegramHandlersService> logger)
         {
-            _tgService = tgService;
             _logger = logger;
         }
 
