@@ -15,6 +15,8 @@ namespace Self.Improvement.Data.Infrastructure
 
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
+        Task<bool> DeleteAsync(TEntity entity);
+
         Task DeleteRangeAsync(IEnumerable<TEntity> entities);
 
         Task<TEntity> UpdateAsync(TEntity entity);
@@ -22,9 +24,5 @@ namespace Self.Improvement.Data.Infrastructure
         Task<int> SaveChangesAsync();
 
         ValueTask<TEntity> GetByIdAsync(params object[] keys);
-
-        void Delete(TEntity entity);
-
-        void Detach(TEntity entity);
     }
 }
