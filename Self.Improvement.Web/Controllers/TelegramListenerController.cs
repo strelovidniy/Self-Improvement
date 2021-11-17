@@ -38,10 +38,10 @@ namespace Self.Improvement.Web.Controllers
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
-            _tgBot.Init(_accesToken.Value.AccessToken);
-            _tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
-            await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Hello");
-            _chatService.SendMessageAsync(new Message
+            //_tgBot.Init(_accesToken.Value.AccessToken);
+            //_tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
+            //await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Hello");
+            await _chatService.SendMessageAsync(new Message
             {
                 ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
                 Date = DateTime.Now,
