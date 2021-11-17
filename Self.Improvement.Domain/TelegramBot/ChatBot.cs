@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Self.Improvement.Domain.Configs;
 using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
@@ -16,6 +18,20 @@ namespace Self.Improvement.Domain.TelegramBot
 
         #endregion
 
+        #region Contructors
+
+        public ChatBot()
+        {
+            
+        }
+
+        public ChatBot(IOptions<ChatBotConfig> chatBotConfig)
+        {
+            
+        }
+        
+        #endregion
+        
         #region Public Methods
 
         public void Init(string accessToken)
