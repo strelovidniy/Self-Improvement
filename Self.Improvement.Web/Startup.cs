@@ -47,7 +47,7 @@ namespace Self.Improvement.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseMiddleware<TelegramBotMiddleware>();
+            //app.UseMiddleware<TelegramBotMiddleware>();
             
             if (!env.IsDevelopment())
             {
