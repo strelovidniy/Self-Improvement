@@ -78,12 +78,12 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .Where(chat => !chat.HasUnreadMessages && chat.Status != ChatStatus.Deleted)
                 .ToListAsync();
 
-        public async Task<Message> SendMessageAsync(Message message)
+        public async Task<Message> SendMessageAsync(Message message, string hostUrl)
         {
             if (message.FromBot)
             {
                 var connection = new HubConnectionBuilder()
-                    .WithUrl("https://self-improvement.azurewebsites.net/api/v1/chats/messages-hub")
+                    .WithUrl($"{hostUrl}/api/v1/chats/messages-hub")
                     .WithAutomaticReconnect()
                     .Build();
 

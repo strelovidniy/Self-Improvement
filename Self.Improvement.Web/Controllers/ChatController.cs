@@ -32,7 +32,7 @@ namespace Self.Improvement.Web.Controllers
         [HttpPost("send-message")]
         public async Task<IActionResult> SendMessageAsync([FromBody] Message message)
         {
-            var result = await _chatService.SendMessageAsync(message);
+            var result = await _chatService.SendMessageAsync(message, GetHostUrl());
 
             return Ok(result);
         }

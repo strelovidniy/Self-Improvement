@@ -12,7 +12,7 @@ namespace Self.Improvement.Domain.Services.Interfaces
         public Task<Chat> GetChatByIdAsync(Guid chatId);
         public Task<IEnumerable<Chat>> GetUnreadChatsAsync();
         public Task<IEnumerable<Chat>> GetReadChatsAsync();
-        public Task<Message> SendMessageAsync(Message message);
+        public Task<Message> SendMessageAsync(Message message, string hostUrl);
         public Task<Message> ReceiveMessageAsync(Message message);
     }
 }
