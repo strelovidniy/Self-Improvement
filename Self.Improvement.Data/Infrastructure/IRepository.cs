@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 namespace Self.Improvement.Data.Infrastructure
 {
     public interface IRepository<TEntity>
-        where TEntity : class
     {
         IQueryable<TEntity> Query(params Expression<Func<TEntity, object>>[] includes);
 
         Task<TEntity> AddAsync(TEntity entity);
 
         Task AddRangeAsync(IEnumerable<TEntity> entities);
+
+        Task<bool> DeleteAsync(TEntity entity);
 
         Task DeleteRangeAsync(IEnumerable<TEntity> entities);
 
@@ -22,9 +23,5 @@ namespace Self.Improvement.Data.Infrastructure
         Task<int> SaveChangesAsync();
 
         ValueTask<TEntity> GetByIdAsync(params object[] keys);
-
-        void Delete(TEntity entity);
-
-        void Detach(TEntity entity);
     }
 }

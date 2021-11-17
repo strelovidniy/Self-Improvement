@@ -12,13 +12,13 @@ namespace Self.Improvement.Data.Infrastructure
     public sealed class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity
     {
-        private readonly SelfImprovementContext _context;
-        private readonly DbSet<TEntity> _dbEntities;
+        private readonly SelfImprovementContext context;
+        private readonly DbSet<TEntity> dbEntities;
 
         public Repository(SelfImprovementContext context)
         {
-            _context = context;
-            _dbEntities = _context.Set<TEntity>();
+            this.context = context;
+            dbEntities = this.context.Set<TEntity>();
         }
 
         /// <summary>
@@ -28,9 +28,10 @@ namespace Self.Improvement.Data.Infrastructure
         /// <returns>IQueryable of all entity records with included entities, if includes is null this function is equal GetAll</returns>
         public IQueryable<TEntity> Query(params Expression<Func<TEntity, object>>[] includes)
         {
-            var dbSet = _context.Set<TEntity>();
+            var dbSet = context.Set<TEntity>();
             var query = includes
-                .Aggregate<Expression<Func<TEntity, object>>, IQueryable<TEntity>>(dbSet, (current, include) => current.Include(include));
+                .Aggregate<Expression<Func<TEntity, object>>, IQueryable<TEntity>>(dbSet,
+                    (current, include) => current.Include(include));
 
             return query ?? dbSet;
         }
@@ -40,7 +41,7 @@ namespace Self.Improvement.Data.Infrastructure
         /// </summary>
         /// <param name="keys">Keys for the search.</param>
         /// <returns>Entity with such keys.</returns>
-        public ValueTask<TEntity> GetByIdAsync(params object[] keys) => _dbEntities.FindAsync(keys);
+        public ValueTask<TEntity> GetByIdAsync(params object[] keys) => dbEntities.FindAsync(keys);
 
         /// <summary>
         /// Async add entity into DBContext
@@ -51,7 +52,7 @@ namespace Self.Improvement.Data.Infrastructure
         public async Task<TEntity> AddAsync(TEntity entity)
         {
             CheckEntityForNull(entity);
-            return (await _dbEntities.AddAsync(entity)).Entity;
+            return (await dbEntities.AddAsync(entity)).Entity;
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Self.Improvement.Data.Infrastructure
         /// </summary>
         /// <param name="entities">Entities to add.</param>
         /// <returns>Task.</returns>
-        public Task AddRangeAsync(IEnumerable<TEntity> entities) => _dbEntities.AddRangeAsync(entities);
+        public Task AddRangeAsync(IEnumerable<TEntity> entities) => dbEntities.AddRangeAsync(entities);
 
         /// <summary>
         /// Updates entity asynchronously
@@ -67,33 +68,29 @@ namespace Self.Improvement.Data.Infrastructure
         /// <param name="entity">entity</param>
         /// <returns>awaitable task with updated entity</returns>
         public async Task<TEntity> UpdateAsync(TEntity entity) =>
-            await Task.Run(() => _dbEntities.Update(entity).Entity);
+            await Task.Run(() => dbEntities.Update(entity).Entity);
+
+        /// <summary>
+        /// Removes entity from DBContext Asynchronously
+        /// </summary>
+        /// <param name="entity">entity</param>
+        /// <returns>true if entity was successfully deleted, and false in other way</returns>
+        public async Task<bool> DeleteAsync(TEntity entity) =>
+            (await Task.Run(() => dbEntities.Remove(entity))).Entity != null;
 
         /// <summary>
         /// Deletes range.
         /// </summary>
         /// <param name="entities">Entities to delete.</param>
         /// <returns>Task.</returns>
-        public async Task DeleteRangeAsync(IEnumerable<TEntity> entities) =>
-            await Task.Run(() => entities.ToList().ForEach(item => _context.Entry(item).State = EntityState.Deleted));
+        public Task DeleteRangeAsync(IEnumerable<TEntity> entities) =>
+            Task.Run(() => dbEntities.RemoveRange());
 
         /// <summary>
         /// Saves changes in the database asynchronously.
         /// </summary>
         /// <returns>Task</returns>
-        public Task<int> SaveChangesAsync() => _context.SaveChangesAsync();
-
-        /// <summary>
-        /// Removes entity from DBContext
-        /// </summary>
-        /// <param name="entity">entity</param>
-        public void Delete(TEntity entity) => _context.Entry(entity).State = EntityState.Deleted;
-
-        /// <summary>
-        /// Detaches entity
-        /// </summary>
-        /// <param name="entity">entity</param>
-        public void Detach(TEntity entity) => _context.Entry(entity).State = EntityState.Detached;
+        public Task<int> SaveChangesAsync() => context.SaveChangesAsync();
 
         private static void CheckEntityForNull(TEntity entity)
         {

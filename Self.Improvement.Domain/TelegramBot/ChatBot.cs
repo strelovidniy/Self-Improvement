@@ -16,6 +16,8 @@ namespace Self.Improvement.Domain.TelegramBot
         public TelegramBotClient Client { get; set; }
         public CancellationTokenSource Cts { get; set; }
 
+        public BotCommand StartCommand { get; set; }
+
         #endregion
 
         #region Contructors
@@ -43,6 +45,8 @@ namespace Self.Improvement.Domain.TelegramBot
         public void Start(Func<ITelegramBotClient, Update, CancellationToken, Task> updateHandler,
             Func<ITelegramBotClient, Exception, CancellationToken, Task> errorHandler)
         {
+            StartCommand.Command = "start";
+            StartCommand.Description = "start command";
             Client.StartReceiving(new DefaultUpdateHandler(updateHandler, errorHandler), Cts.Token);
         }
 
