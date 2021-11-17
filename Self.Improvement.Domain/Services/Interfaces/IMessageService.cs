@@ -8,7 +8,7 @@ namespace Self.Improvement.Domain.Services.Interfaces
     public interface IMessageService
     {
         public Task<Message> GetMessageByIdAsync(Guid messageId);
-        public Task<IEnumerable<Message>> GetMessagesByUserIdAsync(Guid userId);
-        public Task<Message> SendMessageAsync(Message message);
+        public Task<IEnumerable<Message>> GetMessagesByChatIdAsync(Guid userId);
+        public Task<Message> AddMessageAsync(Message message);
     }
 }

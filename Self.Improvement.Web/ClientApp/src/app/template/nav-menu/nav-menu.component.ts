@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import INavPage from 'src/app/shared/types/nav-page.interface';
+import INavPage from 'src/app/shared/types/interfaces/nav-page.interface';
 
 @Component({
     selector: 'app-nav-menu',

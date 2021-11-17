@@ -16,10 +16,12 @@ namespace Self.Improvement.Web.ServiceExtensions
             services.AddTransient<IRepository<User>, Repository<User>>();
             services.AddTransient<IRepository<Message>, Repository<Message>>();
             services.AddTransient<IRepository<Goal>, Repository<Goal>>();
+            services.AddTransient<IRepository<Chat>, Repository<Chat>>();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IGoalService, GoalService>();
+            services.AddTransient<IChatService, ChatService>();
 
             services.AddTransient<ITelegramService, TelegramService>();
             services.AddTransient<ITelegramHandlersService, TelegramHandlersService>();

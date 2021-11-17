@@ -12,7 +12,7 @@ using Self.Improvement.Data.Context;
 namespace Self.Improvement.Data.Migrations
 {
     [DbContext(typeof(SelfImprovementContext))]
-    [Migration("20211116232219_Initial")]
+    [Migration("20211117183430_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,36 @@ namespace Self.Improvement.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Self.Improvement.Data.Entities.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("HasUnreadMessages")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int?>("TelegramChatId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Chat");
+                });
 
             modelBuilder.Entity("Self.Improvement.Data.Entities.Goal", b =>
                 {
@@ -61,8 +91,8 @@ namespace Self.Improvement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ChatId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
@@ -77,15 +107,15 @@ namespace Self.Improvement.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
+                    b.Property<int>("TelegramChatId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ChatId");
 
                     b.ToTable("Messages");
                 });
@@ -110,6 +140,15 @@ namespace Self.Improvement.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Self.Improvement.Data.Entities.Chat", b =>
+                {
+                    b.HasOne("Self.Improvement.Data.Entities.User", null)
+                        .WithOne("Chat")
+                        .HasForeignKey("Self.Improvement.Data.Entities.Chat", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Self.Improvement.Data.Entities.Goal", b =>
                 {
                     b.HasOne("Self.Improvement.Data.Entities.User", null)
@@ -121,18 +160,23 @@ namespace Self.Improvement.Data.Migrations
 
             modelBuilder.Entity("Self.Improvement.Data.Entities.Message", b =>
                 {
-                    b.HasOne("Self.Improvement.Data.Entities.User", null)
+                    b.HasOne("Self.Improvement.Data.Entities.Chat", null)
                         .WithMany("Messages")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Self.Improvement.Data.Entities.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("Self.Improvement.Data.Entities.User", b =>
                 {
-                    b.Navigation("Goals");
+                    b.Navigation("Chat");
 
-                    b.Navigation("Messages");
+                    b.Navigation("Goals");
                 });
 #pragma warning restore 612, 618
         }

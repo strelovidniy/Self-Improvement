@@ -20,7 +20,7 @@ import TemplateModule from './template/template.module';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: (): any => import('./home/home.module').then(m => m.default), pathMatch: 'full' },
             { path: 'dashboard', loadChildren: (): any => import('./dashboard/dashboard.module').then(m => m.default), pathMatch: 'full' },
-            { path: 'chat', loadChildren: (): any => import('./chat/chat.module').then(m => m.default), pathMatch: 'full' },
+            { path: 'chat', loadChildren: (): any => import('./chat/chat.module').then(m => m.default), pathMatch: 'prefix' },
         ], { relativeLinkResolution: 'legacy', preloadingStrategy: PreloadAllModules })
     ],
     providers: [],

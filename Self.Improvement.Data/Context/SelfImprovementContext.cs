@@ -22,6 +22,8 @@ namespace Self.Improvement.Data.Context
         {
             modelBuilder.Entity<Message>(entity =>
             {
+                entity.ToTable("Messages");
+
                 entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.Date)
@@ -33,21 +35,46 @@ namespace Self.Improvement.Data.Context
                     .HasDefaultValue(MessageStatus.Unread);
             });
 
+            modelBuilder.Entity<Chat>(entity =>
+            {
+                entity.ToTable("Chats");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.HasUnreadMessages)
+                    .ValueGeneratedOnAdd()
+                    .HasDefaultValue(false);
+
+                entity.Property(e => e.Status)
+                    .ValueGeneratedOnAdd()
+                    .HasDefaultValue(ChatStatus.Active);
+            });
+
             modelBuilder.Entity<Goal>(entity =>
             {
+                entity.ToTable("Goals");
+
                 entity.HasKey(e => e.Id);
             });
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("Users");
+
                 entity.HasKey(e => e.Id);
             });
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Chat>()
                 .HasMany(e => e.Messages)
                 .WithOne()
-                .HasForeignKey(e => e.UserId)
+                .HasForeignKey(e => e.ChatId)
                 .HasPrincipalKey(e => e.Id);
+
+            modelBuilder.Entity<User>()
+                .HasOne(e => e.Chat)
+                .WithOne()
+                .HasForeignKey<Chat>(e => e.UserId)
+                .HasPrincipalKey<User>(e => e.Id);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Goals)

@@ -18,7 +18,7 @@ namespace Self.Improvement.Domain.Services.Implementations
         public Task<User> GetUserByIdAsync(Guid userId)
             => _userRepository
                 .Query()
-                .IncludeMessages()
+                .IncludeChatWithMessages()
                 .IncludeGoals()
                 .FirstOrDefaultAsync(user => user.Id == userId);
     }
