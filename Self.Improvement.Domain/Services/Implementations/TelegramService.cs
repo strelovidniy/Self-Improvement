@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Interfaces;
 using Self.Improvement.Domain.TelegramBot;
-using Telegram.Bot.Types;
 
 namespace Self.Improvement.Domain.Services.Implementations
 {

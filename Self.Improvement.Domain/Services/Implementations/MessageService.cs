@@ -38,7 +38,7 @@ namespace Self.Improvement.Domain.Services.Implementations
 
             if (!addedMessage.FromBot)
             {
-                await _telegramService.SendMessageAsync(new ChatId(addedMessage.TelegramChatId), addedMessage.Text);
+                //await _telegramService.SendMessageAsync(new ChatId(addedMessage.TelegramChatId), addedMessage.Text);
             }
 
             return addedMessage;

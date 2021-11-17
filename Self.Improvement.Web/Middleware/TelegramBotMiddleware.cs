@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Self.Improvement.Domain.Services.Implementations;
 using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Middleware
