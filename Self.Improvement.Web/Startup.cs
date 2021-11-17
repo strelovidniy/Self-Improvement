@@ -49,12 +49,7 @@ namespace Self.Improvement.Web
             app.UseStaticFiles();
 
             app.UseMiddleware<TelegramBotMiddleware>();
-            
-            app.Run(async(context) =>
-            {
-                await context.Response.WriteAsync("Hello World");
-            });
-            
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
