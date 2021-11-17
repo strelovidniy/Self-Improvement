@@ -20,11 +20,45 @@ namespace Self.Improvement.Domain.Services.Implementations
             _chatRepository = chatRepository;
 
 
-        public Task<Chat> GetChatByUserIdAsync(Guid userId) =>
-            _chatRepository
-                .Query()
-                .IncludeMessages()
-                .FirstOrDefaultAsync(chat => chat.UserId == userId && chat.Status != ChatStatus.Deleted);
+        public async Task<Chat> OpenChatAsync(User user)
+        {
+            var chat = await GetChatByIdAsync(user.Id);
+
+            if (chat is null)
+            {
+                chat = await _chatRepository.AddAsync(new Chat()
+                {
+                    Id = new Guid(),
+                    Name = user.Name,
+                    UserId = user.Id,
+                    HasUnreadMessages = false,
+                    Messages = new List<Message>(),
+                    TelegramChatId = user.TelegramId,
+                    Status = ChatStatus.Active
+                });
+            }
+            else
+            {
+                chat.Status = ChatStatus.Active;
+            }
+
+            await _chatRepository.SaveChangesAsync();
+
+            return chat;
+        }
+
+        public async Task<Chat> CloseChatAsync(Guid userId)
+        {
+            var chat = await GetChatByIdAsync(userId);
+
+            if (chat is null) return null;
+            
+            chat.Status = ChatStatus.Active;
+            
+            await _chatRepository.SaveChangesAsync();
+
+            return chat;
+        }
 
         public Task<Chat> GetChatByIdAsync(Guid chatId) =>
             _chatRepository

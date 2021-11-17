@@ -21,5 +21,12 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .IncludeChatWithMessages()
                 .IncludeGoals()
                 .FirstOrDefaultAsync(user => user.Id == userId);
+
+        public async Task<Guid> GetUserIdByTelegramIdAsync(int userTelegramId) =>
+            (
+                await _userRepository
+                .Query()
+                .FirstOrDefaultAsync(user => user.TelegramId == userTelegramId)
+            ).Id;
     }
 }

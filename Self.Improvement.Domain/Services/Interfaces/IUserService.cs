@@ -7,5 +7,6 @@ namespace Self.Improvement.Domain.Services.Interfaces
     public interface IUserService
     {
         public Task<User> GetUserByIdAsync(Guid userId);
+        public Task<Guid> GetUserIdByTelegramIdAsync(int userId);
     }
 }
