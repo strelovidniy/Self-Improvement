@@ -8,7 +8,6 @@ using Self.Improvement.Data.Enums;
 using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Interfaces;
 using Self.Improvement.Domain.TelegramBot;
-using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Message = Self.Improvement.Data.Entities.Message;
 
@@ -42,7 +41,7 @@ namespace Self.Improvement.Web.Controllers
             try
             {
                 _tgBot.Init(_accesToken.Value.AccessToken);
-                _tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
+                //_tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
                 await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Hello");
 
                 await _chatService.SendMessageAsync(
