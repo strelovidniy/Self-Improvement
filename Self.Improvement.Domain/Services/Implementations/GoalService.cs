@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Enums;
 using Self.Improvement.Data.Infrastructure;
-using Self.Improvement.Domain.Extensions.ServicesExtensions;
 using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Domain.Services.Implementations

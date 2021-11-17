@@ -1,0 +1,15 @@
+<div class="chat-wrapper">
+    <div class="message-container" [ngStyle]="{'justify-content': message.fromBot ? 'left' : 'right'}" *ngFor="let message of messages">
+        <mat-card class="message">
+            {{message.text}}
+        </mat-card>
+    </div>
+</div>
+
+<mat-form-field class="message-input">
+    <mat-label>Message</mat-label>
+    <input matInput placeholder="Type message" [formControl]="messageInputFormControl">
+    <button mat-icon-button matSuffix (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+    </button>
+</mat-form-field>

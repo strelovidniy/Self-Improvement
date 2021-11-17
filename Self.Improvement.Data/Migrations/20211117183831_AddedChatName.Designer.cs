@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Self.Improvement.Data.Context;
 
@@ -11,9 +12,10 @@ using Self.Improvement.Data.Context;
 namespace Self.Improvement.Data.Migrations
 {
     [DbContext(typeof(SelfImprovementContext))]
-    partial class SelfImprovementContextModelSnapshot : ModelSnapshot
+    [Migration("20211117183831_AddedChatName")]
+    partial class AddedChatName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
