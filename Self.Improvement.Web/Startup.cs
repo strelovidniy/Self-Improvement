@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
 
 namespace Self.Improvement.Web
@@ -45,6 +46,8 @@ namespace Self.Improvement.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseMiddleware<TelegramBotMiddleware>();
             
             if (!env.IsDevelopment())
             {

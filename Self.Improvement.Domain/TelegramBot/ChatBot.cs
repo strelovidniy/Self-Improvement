@@ -20,7 +20,7 @@ namespace Self.Improvement.Domain.TelegramBot
 
         #endregion
 
-        #region Contructors
+        #region Ctor
 
         public ChatBot()
         {
