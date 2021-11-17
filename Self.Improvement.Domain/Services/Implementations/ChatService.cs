@@ -83,7 +83,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             if (message.FromBot)
             {
                 var connection = new HubConnectionBuilder()
-                    .WithUrl("http://localhost:5001/api/v1/chats/messages-hub")
+                    .WithUrl("https://self-improvement.azurewebsites.net/api/v1/chats/messages-hub")
                     .WithAutomaticReconnect()
                     .Build();
 

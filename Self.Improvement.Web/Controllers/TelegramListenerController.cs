@@ -52,7 +52,8 @@ namespace Self.Improvement.Web.Controllers
                 Text = "Bot Works",
             });
 
-            return Ok(update.Message.Text);
+            //return Ok(update.Message.Text);
+            return Ok(null);
         }
     }
 }
