@@ -8,7 +8,7 @@
 
 <mat-form-field class="message-input">
     <mat-label>Message</mat-label>
-    <input matInput placeholder="Type message" [formControl]="messageInputFormControl">
+    <input matInput placeholder="Type message" (keydown.enter)="sendMessage()" [formControl]="messageInputFormControl">
     <button mat-icon-button matSuffix (click)="sendMessage()">
         <mat-icon>send</mat-icon>
     </button>

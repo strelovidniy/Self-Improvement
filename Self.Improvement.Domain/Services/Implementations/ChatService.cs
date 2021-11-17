@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Enums;
@@ -51,9 +52,9 @@ namespace Self.Improvement.Domain.Services.Implementations
             var chat = await GetChatByIdAsync(userId);
 
             if (chat is null) return null;
-            
+
             chat.Status = ChatStatus.Active;
-            
+
             await _chatRepository.SaveChangesAsync();
 
             return chat;
@@ -78,6 +79,43 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .ToListAsync();
 
         public async Task<Message> SendMessageAsync(Message message)
+        {
+            if (message.FromBot)
+            {
+                var connection = new HubConnectionBuilder()
+                    .WithUrl("http://localhost:5001/api/v1/chats/messages-hub")
+                    .WithAutomaticReconnect()
+                    .Build();
+
+                await connection.StartAsync();
+
+                await connection.InvokeAsync("EnterToGroup", message.ChatId.ToString());
+
+                await connection.InvokeAsync("SendMessageToGroup", message);
+
+                await connection.InvokeAsync("LeaveTheGroup", message.ChatId.ToString());
+
+                await connection.StopAsync();
+            }
+            else
+            {
+                var telegramChatId = (await _chatRepository
+                    .Query()
+                    .FirstOrDefaultAsync(chat => chat.Id == message.ChatId)).TelegramChatId;
+
+                if (telegramChatId is not null)
+                {
+                    // await _telegramService.SendMessageAsync(telegramChatId, message)
+                }
+            }
+
+            return message;
+        }
+
+        public async Task<Message> ReceiveMessageAsync(Message message) =>
+            AddMessageToChatAsync(message) is null ? null : message;
+
+        private async Task<Message> AddMessageToChatAsync(Message message)
         {
             var chat = await GetChatByIdAsync(message.ChatId);
 

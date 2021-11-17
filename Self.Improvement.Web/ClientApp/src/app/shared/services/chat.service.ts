@@ -15,14 +15,14 @@ export default class ChatService {
     ) { }
 
     public async getUnreadChats(): Promise<Chat[]> {
-        return this.http.get<Chat[]>(`${this.endpointService.chatUrl}/unread`).toPromise();
+        return this.http.get<Chat[]>(`${this.endpointService.chatUrl}unread`).toPromise();
     }
 
     public async getReadChats(): Promise<Chat[]> {
-        return this.http.get<Chat[]>(`${this.endpointService.chatUrl}/read`).toPromise();
+        return this.http.get<Chat[]>(`${this.endpointService.chatUrl}read`).toPromise();
     }
 
     public async sendMessage(message: Message): Promise<Message> {
-        return this.http.post<Message>(`${this.endpointService.chatUrl}/read`, message).toPromise();
+        return this.http.post<Message>(`${this.endpointService.chatUrl}read`, message).toPromise();
     }
 }
