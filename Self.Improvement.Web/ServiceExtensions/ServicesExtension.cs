@@ -6,6 +6,9 @@ using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Implementations;
 using Self.Improvement.Domain.Services.Interfaces;
 using Self.Improvement.Domain.TelegramBot;
+using Telegram.Bot.Types;
+using Message = Self.Improvement.Data.Entities.Message;
+using User = Self.Improvement.Data.Entities.User;
 
 namespace Self.Improvement.Web.ServiceExtensions
 {
@@ -22,8 +25,7 @@ namespace Self.Improvement.Web.ServiceExtensions
             services.AddTransient<IGoalService, GoalService>();
 
             services.AddTransient<ITelegramService, TelegramService>();
-            services.AddTransient<ITelegramHandlersService, TelegramHandlersService>();
-
+            services.AddSingleton<ITelegramHandlersService, TelegramHandlersService>();
             services.AddSingleton(provider => new ChatBot(provider.GetService<IOptions<ChatBotConfig>>()));
         }
     }

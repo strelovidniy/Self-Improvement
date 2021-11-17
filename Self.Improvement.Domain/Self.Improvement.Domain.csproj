@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Self.Improvement.Data\Self.Improvement.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TelegramBot\BotCommands" />
+  </ItemGroup>
+
 </Project>

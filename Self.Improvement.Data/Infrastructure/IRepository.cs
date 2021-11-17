@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace Self.Improvement.Data.Infrastructure
 {
     public interface IRepository<TEntity>
-        where TEntity : class
     {
         IQueryable<TEntity> Query(params Expression<Func<TEntity, object>>[] includes);
 
