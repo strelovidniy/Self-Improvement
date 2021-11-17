@@ -36,7 +36,7 @@ namespace Self.Improvement.Web.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromBody] dynamic update, CancellationToken cancellationToken)
         {
             //_tgBot.Init(_accesToken.Value.AccessToken);
             //_tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
@@ -48,7 +48,7 @@ namespace Self.Improvement.Web.Controllers
                 FromBot = true,
                 Id = new Guid(),
                 Status = MessageStatus.Unread,
-                TelegramChatId = (int)update.Message.Chat.Id,
+                TelegramChatId = 234234234,
                 Text = "Bot Works",
             });
 
