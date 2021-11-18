@@ -9,6 +9,23 @@
     padding-right: 150px;
 }
 
+@media only screen and (max-width: 767px){
+    .chat-wrapper{
+        position: relative;
+        padding-right: unset;
+        right: unset;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .chat-container{
+        height: unset!important;
+    }
+}
+
 .chat-container {
     margin: 10px 0px;
     height: 60px;
