@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,21 @@ namespace Self.Improvement.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+                {
+                    options.LoginPath = "/account/google-login";
+                    options.AccessDeniedPath = "/account/google-login";
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "993766393125-v9p527eibct9b73jffis3mtlg0c3u9tr.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
+                
+            
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddServices();
@@ -72,6 +88,9 @@ namespace Self.Improvement.Web
 
             app.UseCors();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalRHub>("api/v1/chats/messages-hub");

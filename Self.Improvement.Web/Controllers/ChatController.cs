@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
 {
+    [Authorize]
     [Route("api/v1/chats")]
     public class ChatController : BaseApiController
     {

@@ -1,9 +1,11 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Self.Improvement.Web.Controllers
 {
     [ApiController]
+    [Authorize]
     public class BaseApiController : ControllerBase
     {
         internal Guid GetUserId(int telegramId) => new();
