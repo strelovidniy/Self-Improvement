@@ -80,6 +80,13 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .IncludeMessages()
                 .FirstOrDefaultAsync(chat => chat.Id == chatId);
 
+        public async Task<Guid> GetChatIdByTelegramIdAsync(int telegramChatId) =>
+            (
+                await _chatRepository
+                .Query()
+                .FirstOrDefaultAsync(chat => chat.TelegramChatId == telegramChatId)
+            ).Id;
+
         public async Task<IEnumerable<Chat>> GetUnreadChatsAsync() =>
             await _chatRepository
                 .Query()

@@ -10,6 +10,7 @@ namespace Self.Improvement.Domain.Services.Interfaces
         public Task<Chat> OpenChatAsync(User user);
         public Task<Chat> CloseChatAsync(Guid userId);
         public Task<Chat> GetChatByIdAsync(Guid chatId);
+        public Task<Guid> GetChatIdByTelegramIdAsync(int telegramChatId);
         public Task<IEnumerable<Chat>> GetUnreadChatsAsync();
         public Task<IEnumerable<Chat>> GetReadChatsAsync();
         public Task<Message> SendMessageAsync(Message message, string hostUrl);
