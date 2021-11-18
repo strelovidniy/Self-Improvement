@@ -6,6 +6,8 @@ import EndpointService from 'src/app/shared/services/endpoint.service';
 import { ActivatedRoute } from '@angular/router';
 import Message from 'src/app/shared/types/message';
 import MessageStatus from 'src/app/shared/types/enums/message-status.enum';
+import Chat from 'src/app/shared/types/Chat';
+import ChatService from 'src/app/shared/services/chat.service';
 
 @Component({
     selector: 'app-messenger',
@@ -13,8 +15,7 @@ import MessageStatus from 'src/app/shared/types/enums/message-status.enum';
     styleUrls: ['./messenger.component.css']
 })
 export default class MessengerComponent implements AfterViewInit, OnDestroy {
-
-    public messages = [{ text: 'Hey', fromBot: true }, { text: 'Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey', fromBot: false }];
+    public chat: Chat;
 
     public messageInputFormControl = new FormControl();
 
@@ -25,11 +26,19 @@ export default class MessengerComponent implements AfterViewInit, OnDestroy {
     public constructor(
         private templateService: TemplateService,
         private endpointService: EndpointService,
+        private chatService: ChatService,
         private route: ActivatedRoute,
     ) { }
 
     public async ngAfterViewInit(): Promise<void> {
-        this.route.params.subscribe(params => this.chatId = params['chatId']);
+        await new Promise<void>(resolve => {
+            this.route.params.subscribe(params => {
+                this.chatId = params['chatId'];
+                resolve();
+            });
+        });
+
+        this.chat = await this.chatService.getChatById(this.chatId);
 
         this.connection = new signalR.HubConnectionBuilder()
                 .configureLogging(signalR.LogLevel.Information)
@@ -44,7 +53,7 @@ export default class MessengerComponent implements AfterViewInit, OnDestroy {
         this.connection.onreconnected(() => this.invokeSignalR());
 
         this.connection.on('RecieveMessage', (receivedMessage: any) => {
-            this.messages.push(receivedMessage);
+            this.chat?.messages?.push(receivedMessage);
         });
 
         this.templateService.TurnLoaderOff();
@@ -66,10 +75,10 @@ export default class MessengerComponent implements AfterViewInit, OnDestroy {
                     chatId: this.chatId,
                     date: new Date(Date.now()),
                     fromBot: false,
-                    id: '015c7a74-9f2f-4299-a8a5-db010358b2f7',
+                    id: '00000000-0000-0000-0000-000000000000',
                     status: MessageStatus.Read,
                     text: message,
-                    telegramChatId: 234234234
+                    telegramChatId: this.chat.telegramChatId
                 } as Message);
             }
         } else {

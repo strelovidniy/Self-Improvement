@@ -1,5 +1,5 @@
 <div class="chat-wrapper">
-    <div class="message-container" [ngStyle]="{'justify-content': message.fromBot ? 'left' : 'right'}" *ngFor="let message of messages">
+    <div class="message-container" [ngStyle]="{'justify-content': message.fromBot ? 'left' : 'right'}" *ngFor="let message of chat?.messages">
         <mat-card class="message">
             {{message.text}}
         </mat-card>

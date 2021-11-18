@@ -2,12 +2,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Self.Improvement.Data.Enums;
-using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Interfaces;
-using Self.Improvement.Domain.TelegramBot;
 using Telegram.Bot.Types;
 using Message = Self.Improvement.Data.Entities.Message;
 
@@ -17,33 +14,16 @@ namespace Self.Improvement.Web.Controllers
     [Route("api/v1/telegram-listener")]
     public class TelegramListenerController : BaseApiController
     {
-        private readonly ChatBot _tgBot;
-        private readonly IOptions<ChatBotConfig> _accesToken;
-        private readonly ITelegramHandlersService _tgHandler;
         private readonly IChatService _chatService;
 
-        public TelegramListenerController(
-            ChatBot tgBot,
-            IOptions<ChatBotConfig> accesToken,
-            ITelegramHandlersService tgHandler,
-            IChatService chatService
-        )
-        {
-            _tgBot = tgBot;
-            _accesToken = accesToken;
-            _tgHandler = tgHandler;
+        public TelegramListenerController(IChatService chatService) => 
             _chatService = chatService;
-        }
 
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
             try
             {
-                _tgBot.Init(_accesToken.Value.AccessToken);
-                //_tgBot.Start(_tgHandler.HandleUpdateAsync, _tgHandler.HandleErrorAsync);
-                await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Hello");
-
                 await _chatService.SendMessageAsync(
                     new Message
                     {

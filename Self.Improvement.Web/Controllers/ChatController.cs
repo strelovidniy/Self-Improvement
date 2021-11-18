@@ -1,6 +1,6 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Self.Improvement.Data.Entities;
 using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
@@ -14,27 +14,15 @@ namespace Self.Improvement.Web.Controllers
             _chatService = chatService;
 
         [HttpGet("unread")]
-        public async Task<IActionResult> GetUnreadChatsAsync()
-        {
-            var result = await _chatService.GetUnreadChatsAsync();
-
-            return Ok(result);
-        }
+        public async Task<IActionResult> GetUnreadChatsAsync() => 
+            Ok(await _chatService.GetUnreadChatsAsync());
 
         [HttpGet("read")]
-        public async Task<IActionResult> GetReadChatsAsync()
-        {
-            var result = await _chatService.GetReadChatsAsync();
+        public async Task<IActionResult> GetReadChatsAsync() => 
+            Ok(await _chatService.GetReadChatsAsync());
 
-            return Ok(result);
-        }
-
-        [HttpPost("send-message")]
-        public async Task<IActionResult> SendMessageAsync([FromBody] Message message)
-        {
-            var result = await _chatService.SendMessageAsync(message, GetHostUrl());
-
-            return Ok(result);
-        }
+        [HttpGet("{chatId:guid}")]
+        public async Task<IActionResult> SendMessageAsync(Guid chatId) => 
+            Ok(await _chatService.GetChatByIdAsync(chatId));
     }
 }

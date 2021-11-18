@@ -4,20 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Enums;
 using Self.Improvement.Data.Infrastructure;
+using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Extensions.ServicesExtensions;
 using Self.Improvement.Domain.Services.Interfaces;
+using Self.Improvement.Domain.TelegramBot;
 
 namespace Self.Improvement.Domain.Services.Implementations
 {
     public class ChatService : IChatService
     {
         private readonly IRepository<Chat> _chatRepository;
+        private readonly ChatBot _telegramBot;
+        private readonly IOptions<ChatBotConfig> _telegramBotConfig;
 
-        public ChatService(IRepository<Chat> chatRepository) =>
+        public ChatService(
+            IRepository<Chat> chatRepository,
+            ChatBot telegramBot,
+            IOptions<ChatBotConfig> telegramBotConfig
+        )
+        {
             _chatRepository = chatRepository;
+            _telegramBot = telegramBot;
+            _telegramBotConfig = telegramBotConfig;
+        }
 
 
         public async Task<Chat> OpenChatAsync(User user)
@@ -78,42 +92,13 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .Where(chat => !chat.HasUnreadMessages && chat.Status != ChatStatus.Deleted)
                 .ToListAsync();
 
-        public async Task<Message> SendMessageAsync(Message message, string hostUrl)
-        {
-            if (message.FromBot)
-            {
-                var connection = new HubConnectionBuilder()
-                    .WithUrl($"{hostUrl}/api/v1/chats/messages-hub")
-                    .WithAutomaticReconnect()
-                    .Build();
+        public async Task<Message> SendMessageAsync(Message message, string hostUrl) => 
+            message.FromBot 
+                ? await SendMessageToWebUIASync(message, hostUrl)
+                : await SendMessageToTelegramAsync(message, hostUrl);
 
-                await connection.StartAsync();
-
-                await connection.InvokeAsync("EnterToGroup", message.ChatId.ToString());
-
-                await connection.InvokeAsync("SendMessageToGroup", message);
-
-                await connection.InvokeAsync("LeaveTheGroup", message.ChatId.ToString());
-
-                await connection.StopAsync();
-            }
-            else
-            {
-                var telegramChatId = (await _chatRepository
-                    .Query()
-                    .FirstOrDefaultAsync(chat => chat.Id == message.ChatId)).TelegramChatId;
-
-                if (telegramChatId is not null)
-                {
-                    // await _telegramService.SendMessageAsync(telegramChatId, message)
-                }
-            }
-
-            return message;
-        }
-
-        public async Task<Message> ReceiveMessageAsync(Message message) =>
-            AddMessageToChatAsync(message) is null ? null : message;
+        public async Task<Message> ReceiveMessageAsync(Message message) => 
+            await AddMessageToChatAsync(message);
 
         private async Task<Message> AddMessageToChatAsync(Message message)
         {
@@ -128,6 +113,60 @@ namespace Self.Improvement.Domain.Services.Implementations
             chat.Messages = messages;
 
             await _chatRepository.SaveChangesAsync();
+
+            return message;
+        }
+
+        private async Task<Message> SendMessageToWebUIASync(Message message, string hostUrl)
+        {
+            var connection = new HubConnectionBuilder()
+                .WithUrl($"{hostUrl}/api/v1/chats/messages-hub")
+                .WithAutomaticReconnect()
+                .Build();
+
+            await connection.StartAsync();
+
+            await connection.InvokeAsync("EnterToGroup", message.ChatId.ToString());
+
+            await connection.InvokeAsync("SendMessageToGroup", message);
+
+            await connection.InvokeAsync("LeaveTheGroup", message.ChatId.ToString());
+
+            await connection.StopAsync();
+
+            return message;
+        }
+
+        private async Task<Message> SendMessageToTelegramAsync(Message message, string hostUrl)
+        {
+            var telegramChatId = (await _chatRepository
+                .Query()
+                .FirstOrDefaultAsync(chat => chat.Id == message.ChatId)).TelegramChatId;
+
+            if (telegramChatId is null) return message;
+
+            try
+            {
+                _telegramBot.Init(_telegramBotConfig.Value.AccessToken);
+
+                await _telegramBot.Client.SendTextMessageAsync(message.TelegramChatId, message.Text);
+            }
+            catch (Exception ex)
+            {
+                await SendMessageAsync(
+                    new Message
+                    {
+                        ChatId = message.ChatId,
+                        Date = message.Date,
+                        FromBot = message.FromBot,
+                        Id = message.Id,
+                        Status = message.Status,
+                        TelegramChatId = message.TelegramChatId,
+                        Text = JsonConvert.SerializeObject(ex)
+                    },
+                    hostUrl
+                );
+            }
 
             return message;
         }
