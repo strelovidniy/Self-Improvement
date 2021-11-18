@@ -34,8 +34,8 @@ namespace Self.Improvement.Web.Controllers
         {
             try
             {
-                if (update.Message?.Text == _botCommands.StartCommand.Command)
-                {
+                if (update.Message?.Text == "/start")
+                { 
                     _tgBotService.Authenticate(update);
                 }
                 
