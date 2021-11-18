@@ -11,7 +11,7 @@ namespace Self.Improvement.Domain.Services.Implementations
         {
             StartCommand = new BotCommand
             {
-                Command = "start",
+                Command = "/start",
                 Description = "command to start the bot"
             };
         }
