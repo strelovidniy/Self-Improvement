@@ -17,11 +17,13 @@ import TemplateModule from './template/template.module';
         BrowserAnimationsModule,
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', loadChildren: (): any => import('./home/home.module').then(m => m.default), pathMatch: 'full' },
-            { path: 'dashboard', loadChildren: (): any => import('./dashboard/dashboard.module').then(m => m.default), pathMatch: 'full' },
+            { path: '', redirectTo: '/home', pathMatch: 'full' },
+            { path: 'home', loadChildren: (): any => import('./home/home.module').then(m => m.default), pathMatch: 'prefix' },
+            { path: 'dashboard', loadChildren: (): any => import('./dashboard/dashboard.module').then(m => m.default), pathMatch: 'prefix' },
             { path: 'chat', loadChildren: (): any => import('./chat/chat.module').then(m => m.default), pathMatch: 'prefix' },
             { path: 'admin', loadChildren: (): any => import('./admin/admin.module').then(m => m.default), pathMatch: 'prefix' },
+            { path: 'error', loadChildren: (): any => import('./error/error.module').then(m => m.default), pathMatch: 'prefix' },
+            { path: '**', redirectTo: '/error/not-found' },
         ], { relativeLinkResolution: 'legacy', preloadingStrategy: PreloadAllModules })
     ],
     providers: [],

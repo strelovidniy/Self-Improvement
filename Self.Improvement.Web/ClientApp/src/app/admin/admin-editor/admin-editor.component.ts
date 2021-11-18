@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import ConfirmDialogComponent from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import UserRole from 'src/app/shared/types/enums/user-role.enum';
@@ -25,6 +25,18 @@ export default class AdminEditorComponent implements OnInit {
         Validators.required
     ]);
 
+    public userEmailFormControl = new FormControl('', [
+        Validators.required,
+        Validators.email
+    ]);
+
+    public userFormGroup = new FormGroup({
+        email: this.userEmailFormControl,
+        name: this.userNameFormControl,
+        telegramId: this.userTelegramIdFormControl,
+        role: this.userRoleFormControl,
+    });
+
     public constructor(
         private dialogRef: MatDialogRef<ConfirmDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private data: { edit: boolean; user: User; }
@@ -35,17 +47,19 @@ export default class AdminEditorComponent implements OnInit {
             this.userNameFormControl.setValue(this.data.user.name, { emitEvent: true });
             this.userRoleFormControl.setValue(this.data.user.role, { emitEvent: true });
             this.userTelegramIdFormControl.setValue(this.data.user.telegramId, { emitEvent: true });
+            this.userEmailFormControl.setValue(this.data.user.email, { emitEvent: true });
         }
     }
 
     public save(): void {
-        if (this.userNameFormControl.valid && this.userRoleFormControl.valid) {
+        if (this.userFormGroup.valid) {
             this.dialogRef.close(this.data.edit
                 ? {
                     ...this.data.user,
                     name: this.userNameFormControl.value,
                     role: this.userRoleFormControl.value as UserRole,
-                    telegramId: Number(this.userTelegramIdFormControl.value)
+                    telegramId: Number(this.userTelegramIdFormControl.value),
+                    email: this.userEmailFormControl.value
                 } as User
                 : {
                     chat: null,
@@ -53,7 +67,8 @@ export default class AdminEditorComponent implements OnInit {
                     id: uuid.NIL,
                     name: this.userNameFormControl.value,
                     role: this.userRoleFormControl.value,
-                    telegramId: Number(this.userTelegramIdFormControl.value)
+                    telegramId: Number(this.userTelegramIdFormControl.value),
+                    email: this.userEmailFormControl.value
                 } as User);
         }
     }

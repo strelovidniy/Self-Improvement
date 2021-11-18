@@ -9,4 +9,5 @@ export default class User {
     public role: UserRole;
     public goals: Goal[];
     public chat: Chat;
+    public email: string;
 }

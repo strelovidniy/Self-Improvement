@@ -13,7 +13,7 @@ import ConfirmDialogComponent from '../shared/components/confirm-dialog/confirm-
     styleUrls: ['./admin.component.css']
 })
 export default class AdminComponent implements AfterViewInit {
-    public displayedColumns: string[] = ['id', 'name', 'role', 'actions'];
+    public displayedColumns: string[] = ['id', 'name', 'email', 'role', 'actions'];
 
     public users: User[];
 

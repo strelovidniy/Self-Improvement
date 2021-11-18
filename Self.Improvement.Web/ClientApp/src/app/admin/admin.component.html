@@ -12,6 +12,11 @@
             <mat-cell *matCellDef="let user"> {{user.name}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="email">
+            <mat-header-cell mat-sort-header *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="role">
             <mat-header-cell mat-sort-header *matHeaderCellDef> Role </mat-header-cell>
             <mat-cell *matCellDef="let user"> {{getUserRoleName(user.role)}} </mat-cell>

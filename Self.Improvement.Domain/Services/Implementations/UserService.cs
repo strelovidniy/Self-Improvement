@@ -44,6 +44,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             updatingUser.Goals = user.Goals;
             updatingUser.Role = user.Role;
             updatingUser.TelegramId = user.TelegramId;
+            updatingUser.Email = user.Email;
 
             await _userRepository.SaveChangesAsync();
 
