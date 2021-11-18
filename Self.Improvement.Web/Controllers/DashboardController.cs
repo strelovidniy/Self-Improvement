@@ -27,7 +27,7 @@ namespace Self.Improvement.Web.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{goalId: guid}")]
+        [HttpGet("{goalId:guid}")]
         public async Task<IActionResult> GetGoalById(Guid goalId) =>
             Ok(await _goalService.GetGoalById(goalId));
 
@@ -39,12 +39,12 @@ namespace Self.Improvement.Web.Controllers
         public async Task<IActionResult> UpdateGoal([FromBody] Goal goal) =>
             Ok(await _goalService.UpdateGoal(goal));
 
-        [HttpPut("{goalId: guid}")]
+        [HttpPut("{goalId:guid}")]
         public async Task<IActionResult> UpdateGoalStatus(Guid goalId, GoalStatus goalStatus) =>
             Ok(await _goalService.UpdateGoalStatus(goalId, goalStatus));
 
 
-        [HttpDelete("{goalId: guid}")]
+        [HttpDelete("{goalId:guid}")]
         public async Task<IActionResult> RemoveGoalById(Guid goalId) =>
             Ok(await _goalService.RemoveGoalById(goalId));
     }
