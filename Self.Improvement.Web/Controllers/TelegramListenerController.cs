@@ -27,7 +27,7 @@ namespace Self.Improvement.Web.Controllers
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid(),
+                        ChatId = await _chatService.GetChatIdByTelegramIdAsync((int)update.Message.Chat.Id),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
@@ -42,10 +42,12 @@ namespace Self.Improvement.Web.Controllers
             }
             catch (Exception ex)
             {
+                // send Exception messages to my own Chat
+
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid(),
+                        ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
@@ -59,7 +61,7 @@ namespace Self.Improvement.Web.Controllers
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid(),
+                        ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
