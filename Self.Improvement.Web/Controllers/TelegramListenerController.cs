@@ -27,7 +27,7 @@ namespace Self.Improvement.Web.Controllers
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
+                        ChatId = new Guid(),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
@@ -45,7 +45,7 @@ namespace Self.Improvement.Web.Controllers
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
+                        ChatId = new Guid(),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
@@ -59,7 +59,7 @@ namespace Self.Improvement.Web.Controllers
                 await _chatService.SendMessageAsync(
                     new Message
                     {
-                        ChatId = new Guid("146fc3d8-22c6-40dd-a052-2a7b853739bd"),
+                        ChatId = new Guid(),
                         Date = DateTime.Now,
                         FromBot = true,
                         Id = new Guid(),
