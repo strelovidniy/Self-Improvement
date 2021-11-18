@@ -4,6 +4,9 @@
             Telegram ID
         </mat-label>
         <input type="number" matInput [formControl]="userTelegramIdFormControl">
+        <mat-error>
+            Telegram ID is required
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -11,6 +14,22 @@
             Name
         </mat-label>
         <input matInput [formControl]="userNameFormControl">
+        <mat-error>
+            Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Email
+        </mat-label>
+        <input matInput [formControl]="userEmailFormControl">
+        <mat-error *ngIf="userEmailFormControl.hasError('required')">
+            Email is required
+        </mat-error>
+        <mat-error *ngIf="!userEmailFormControl.hasError('required')">
+            Email is invalid
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -28,10 +47,13 @@
                 Admin
             </mat-option>
         </mat-select>
+        <mat-error>
+            Role is required
+        </mat-error>
     </mat-form-field>
 
     <div class="buttons-container">
-        <button type="button" mat-button>
+        <button mat-button type="button" (click)="discard()">
             Discard
         </button>
         <button mat-button type="submit">

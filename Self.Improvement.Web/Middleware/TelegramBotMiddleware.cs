@@ -6,37 +6,12 @@ namespace Self.Improvement.Web.Middleware
 {
     public class TelegramBotMiddleware
     {
-        #region Fields
-
         private readonly RequestDelegate _next;
-        private readonly ITelegramService _tgService;
 
-        #endregion
-
-        #region Ctor
-
-        public TelegramBotMiddleware(RequestDelegate next, ITelegramService tgService)
-        {
+        public TelegramBotMiddleware(RequestDelegate next) => 
             _next = next;
-            _tgService = tgService;
-        }
 
-        #endregion
-
-        #region Public Methods
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            if (context.Response.HasStarted is not false)
-            {
-                _tgService.StartTelegramBot();
-            }
-            else
-            {
-                await _next.Invoke(context);
-            }
-        }
-
-        #endregion
+        public async Task InvokeAsync(HttpContext context) => 
+            await _next.Invoke(context);
     }
 }

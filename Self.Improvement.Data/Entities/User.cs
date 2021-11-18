@@ -8,6 +8,7 @@ namespace Self.Improvement.Data.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public int? TelegramId { get; set; }
         public UserRole Role { get; set; }
         public IEnumerable<Goal> Goals { get; set; }
