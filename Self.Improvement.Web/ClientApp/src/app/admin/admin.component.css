@@ -1,0 +1,19 @@
+mat-cell.mat-cell {
+    justify-content: center;
+}
+
+mat-header-cell.mat-header-cell {
+    justify-content: center;
+}
+
+mat-table.mat-table {
+    height: calc(100vh - 164px);
+}
+
+.table-container {
+    margin: 20px 0px;
+}
+
+.mat-column-add-user {
+    cursor: pointer;
+}
