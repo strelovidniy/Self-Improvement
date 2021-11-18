@@ -1,14 +1,14 @@
 <app-loader color="primary" (loaded)="onLoaded()" (loadedingStarted)="onLoadingStarted()"></app-loader>
 <mat-toolbar color="primary">
-    <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button (click)="drawer.toggle()" mat-icon-button class="example-icon menu-btn" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>My App</span>
+    <span class="app-name">My App</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button>
+    <button mat-icon-button class="fav-btn icon">
         <mat-icon>favorite</mat-icon>
     </button>
-    <button mat-icon-button (click)="referToTelegramBot()">
+    <button mat-icon-button class="tg-btn icon" (click)="referToTelegramBot()">
         <mat-icon>send</mat-icon>
     </button>
 </mat-toolbar>

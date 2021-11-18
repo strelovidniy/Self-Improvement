@@ -71,3 +71,37 @@ body {
         background-position: 0;
     }
 }
+
+.mat-drawer.mat-drawer-side{
+    box-shadow: 13px 0px 15px 5px rgba(0,0,0,0.4);
+    border: none;
+    background: #323337;
+    padding: 1rem;
+}
+
+.mat-list-base{
+    background: #252628;
+    border-radius: 15px;
+    height: 100%;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option{
+    height: 70px!important;
+}
+
+.mat-badge-content{
+    background: #2885FF!important;
+}
+
+.mat-badge{
+    position: absolute;
+    top: 2%;
+    right: 5%;
+}
+
+.mat-badge-medium .mat-badge-content{
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    text-indent: -9999px; 
+}
