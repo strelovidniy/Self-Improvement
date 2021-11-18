@@ -5,4 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export default class EndpointService {
     public readonly chatUrl = '/api/v1/chats/';
+    public readonly adminUrl = '/api/v1/admin/';
 }

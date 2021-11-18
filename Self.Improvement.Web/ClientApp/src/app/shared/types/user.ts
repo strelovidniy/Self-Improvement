@@ -5,8 +5,8 @@ import Goal from './goal';
 export default class User {
     public id: string;
     public name: string;
-    public telegramId: string;
+    public telegramId: number;
     public role: UserRole;
-    public goald: Goal[];
+    public goals: Goal[];
     public chat: Chat;
 }
