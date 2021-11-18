@@ -21,16 +21,19 @@ namespace Self.Improvement.Domain.Services.Implementations
         private readonly IRepository<Chat> _chatRepository;
         private readonly ChatBot _telegramBot;
         private readonly IOptions<ChatBotConfig> _telegramBotConfig;
+        private readonly IUserService _userService;
 
         public ChatService(
             IRepository<Chat> chatRepository,
             ChatBot telegramBot,
-            IOptions<ChatBotConfig> telegramBotConfig
+            IOptions<ChatBotConfig> telegramBotConfig,
+            IUserService userService
         )
         {
             _chatRepository = chatRepository;
             _telegramBot = telegramBot;
             _telegramBotConfig = telegramBotConfig;
+            _userService = userService;
         }
 
 
@@ -80,12 +83,31 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .IncludeMessages()
                 .FirstOrDefaultAsync(chat => chat.Id == chatId);
 
-        public async Task<Guid> GetChatIdByTelegramIdAsync(int telegramChatId) =>
-            (
-                await _chatRepository
+        public async Task<Guid> GetChatIdByTelegramIdAsync(int telegramChatId)
+        {
+            var chat = await _chatRepository
                 .Query()
-                .FirstOrDefaultAsync(chat => chat.TelegramChatId == telegramChatId)
-            ).Id;
+                .FirstOrDefaultAsync(chat => chat.TelegramChatId == telegramChatId);
+
+            if (chat is not null) return chat.Id;
+
+            var userId = await _userService.GetUserIdByTelegramIdAsync(telegramChatId);
+
+            chat = await _chatRepository.AddAsync(new Chat
+            {
+                HasUnreadMessages = false,
+                Id = new Guid(),
+                Messages = new System.Collections.Generic.List<Message>(),
+                TelegramChatId = telegramChatId,
+                Status = ChatStatus.Active,
+                Name = (await _userService.GetUserByIdAsync(userId)).Name,
+                UserId = userId
+            });
+
+            await _chatRepository.SaveChangesAsync();
+
+            return chat.Id;
+        }
 
         public async Task<IEnumerable<Chat>> GetUnreadChatsAsync() =>
             await _chatRepository
@@ -99,12 +121,12 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .Where(chat => !chat.HasUnreadMessages && chat.Status != ChatStatus.Deleted)
                 .ToListAsync();
 
-        public async Task<Message> SendMessageAsync(Message message, string hostUrl) => 
-            message.FromBot 
+        public async Task<Message> SendMessageAsync(Message message, string hostUrl) =>
+            message.FromBot
                 ? await SendMessageToWebUIASync(message, hostUrl)
                 : await SendMessageToTelegramAsync(message, hostUrl);
 
-        public async Task<Message> ReceiveMessageAsync(Message message) => 
+        public async Task<Message> ReceiveMessageAsync(Message message) =>
             await AddMessageToChatAsync(message);
 
         private async Task<Message> AddMessageToChatAsync(Message message)
