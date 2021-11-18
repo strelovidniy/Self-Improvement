@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Self.Improvement.Data.Enums;
@@ -11,6 +12,7 @@ using Message = Self.Improvement.Data.Entities.Message;
 namespace Self.Improvement.Web.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/telegram-listener")]
     public class TelegramListenerController : BaseApiController
     {
