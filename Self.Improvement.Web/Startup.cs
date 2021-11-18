@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Hubs;
 using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
@@ -20,18 +21,23 @@ namespace Self.Improvement.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var secOpts = Configuration
+                .GetSection("GoogleOAuthConfig")
+                .Get<GoogleOAuthConfig>();
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options =>
                 {
+                    // TODO: Change to Login page
                     options.LoginPath = "/account/google-login";
                     options.AccessDeniedPath = "/account/google-login";
                 })
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "993766393125-v9p527eibct9b73jffis3mtlg0c3u9tr.apps.googleusercontent.com";
-                    options.ClientSecret = "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";
+                    options.ClientId = secOpts.ClientId;
+                    options.ClientSecret = secOpts.ClientSecret;
                 });
                 
             services.AddHttpContextAccessor();

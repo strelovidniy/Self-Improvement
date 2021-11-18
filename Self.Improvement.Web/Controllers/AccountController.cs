@@ -11,7 +11,7 @@ using Self.Improvement.Domain.Services.Interfaces;
 namespace Self.Improvement.Web.Controllers
 {
     [AllowAnonymous, Route("account")]
-    public class AccountController : Controller
+    public class AccountController : BaseApiController
     {
         private readonly string _userEmail;
         private readonly IAccountService _accountService;
@@ -34,7 +34,7 @@ namespace Self.Improvement.Web.Controllers
         {
             await _accountService.CreateNewUserIfNotExistAsync(User.FindFirst(ClaimTypes.Email)?.Value,
                 User.FindFirst(ClaimTypes.Name)?.Value, ct);
-            return Redirect($"${Request.Scheme}://{Request.Host.Value}/home");
+            return RedirectPermanent($"{GetHostUrl()}");
         }
         
         [Route("permission")]

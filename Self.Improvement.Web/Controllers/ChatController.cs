@@ -6,7 +6,7 @@ using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/v1/chats")]
     public class ChatController : BaseApiController
     {

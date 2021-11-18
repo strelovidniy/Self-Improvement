@@ -12,7 +12,7 @@ using Message = Self.Improvement.Data.Entities.Message;
 namespace Self.Improvement.Web.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/v1/telegram-listener")]
     public class TelegramListenerController : BaseApiController
     {

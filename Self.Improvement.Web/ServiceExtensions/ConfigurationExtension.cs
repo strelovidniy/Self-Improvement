@@ -9,6 +9,7 @@ namespace Self.Improvement.Web.ServiceExtensions
         public static void ApplyConfigurations(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ChatBotConfig>(configuration.GetSection("ChatBotConfig"));
+            services.Configure<GoogleOAuthConfig>(configuration.GetSection("GoogleOAuthConfig"));
         }
     }
 }
