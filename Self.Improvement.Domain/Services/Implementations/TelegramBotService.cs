@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
 using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Services.Interfaces;
@@ -27,8 +28,20 @@ namespace Self.Improvement.Domain.Services.Implementations
             if (update.Message != null)
             {
                 await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "What`s your name?");
-                var name = update.Message.Text;
-                await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Your name is {name}?");
+                var startMessageId = update.Message.MessageId;
+                string name = "";
+                string email;
+                if (update.Message.MessageId != startMessageId)
+                {
+                    name = update.Message.Text;
+                    await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Ok, {name}, what is you email?");
+                }
+
+                if (update.Message.Text != name)
+                {
+                    email = update.Message.Text;
+                    await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Thank you, you are now registered!");
+                }
             }
         }
     }
