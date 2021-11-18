@@ -14,9 +14,6 @@ namespace Self.Improvement.Domain.TelegramBot
         public TelegramBotClient Client { get; set; }
         public CancellationTokenSource Cts { get; set; }
 
-        public BotCommand StartCommand { get; set; }
-        
-
         public ChatBot()
         {
             
@@ -24,7 +21,7 @@ namespace Self.Improvement.Domain.TelegramBot
 
         public ChatBot(IOptions<ChatBotConfig> chatBotConfig)
         {
-            
+             
         }
         
         public void Init(string accessToken)
