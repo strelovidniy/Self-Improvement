@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Infrastructure;
 using Self.Improvement.Domain.Services.Interfaces;
-using Message = Self.Improvement.Data.Entities.Message;
 
 namespace Self.Improvement.Domain.Services.Implementations
 {

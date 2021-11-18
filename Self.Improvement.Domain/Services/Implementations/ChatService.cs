@@ -43,7 +43,7 @@ namespace Self.Improvement.Domain.Services.Implementations
 
             if (chat is null)
             {
-                chat = await _chatRepository.AddAsync(new Chat()
+                chat = await _chatRepository.AddAsync(new Chat
                 {
                     Id = new Guid(),
                     Name = user.Name,
@@ -97,7 +97,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             {
                 HasUnreadMessages = false,
                 Id = new Guid(),
-                Messages = new System.Collections.Generic.List<Message>(),
+                Messages = new List<Message>(),
                 TelegramChatId = telegramChatId,
                 Status = ChatStatus.Active,
                 Name = (await _userService.GetUserByIdAsync(userId)).Name,
