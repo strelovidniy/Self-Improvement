@@ -34,6 +34,7 @@ namespace Self.Improvement.Web
                     options.ClientSecret = "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";
                 });
                 
+            services.AddHttpContextAccessor();
             
             services.AddControllers().AddNewtonsoftJson();
 
