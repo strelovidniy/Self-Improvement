@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Self.Improvement.Data.Entities;
@@ -71,6 +72,13 @@ namespace Self.Improvement.Domain.Services.Implementations
             await _userRepository.SaveChangesAsync();
 
             return result;
+        }
+        
+        public async Task<User> GetUserByEmailIfExistAsync(string email, CancellationToken ct)
+        {
+            return await _userRepository
+                .Query()
+                .FirstOrDefaultAsync(user => user.Email != null && user.Email == email, ct);
         }
     }
 }
