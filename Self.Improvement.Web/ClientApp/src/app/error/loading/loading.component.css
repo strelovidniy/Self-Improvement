@@ -1,4 +1,4 @@
-.bg-text{
+.bg-text {
     font-size: 344px;
     letter-spacing: 50px;
     font-weight: 800;
@@ -10,49 +10,68 @@
     transform: translateX(-50%) translateY(-50%);
     user-select: none;
     opacity: .2;
-    text-shadow: 30px 40px 2px rgba(0,0,0,0.59);
+    text-shadow: 30px 40px 2px rgba(0, 0, 0, 0.59);
 }
 
-.info{
+.info {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     padding: 2rem;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.info h3{
+.info h3 {
     font-size: 42px;
     letter-spacing: 10px;
 }
 
-.info h4{
+.info h4 {
     margin-top: 1rem;
     font-size: 38px;
     font-weight: 300;
 }
 
-.info p{
+.info p {
     margin-top: .5rem;
     letter-spacing: 5px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.btn {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 5px;
+    font-size: 24px;
+    color: #fff;
+    padding: 1rem 4rem;
+    background: linear-gradient(90deg, #ffd33d, #ea4aaa 17%, #b34bff 34%, #01feff 51%, #ffd33d 68%, #ea4aaa 85%, #b34bff);
+    background-size: 300% 100%;
+    animation: progress-animation 2s linear infinite!important;
+    border-radius: 50px;
 }
 
 @media only screen and (max-width: 767px) {
-    .bg-text{
+    .bg-text {
         font-size: 144px;
     }
-
-    .info{
+    .info {
         width: 80%;
     }
-
-    .info h4{
+    .info h4 {
         font-size: 30px;
+    }
+    .btn {
+        font-size: 18px;
     }
 }

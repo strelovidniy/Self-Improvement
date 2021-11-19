@@ -31,12 +31,7 @@ export default class MessengerComponent implements AfterViewInit, OnDestroy {
     ) { }
 
     public async ngAfterViewInit(): Promise<void> {
-        await new Promise<void>(resolve => {
-            this.route.params.subscribe(params => {
-                this.chatId = params['chatId'];
-                resolve();
-            });
-        });
+        this.chatId = this.route.snapshot.paramMap.get('chatId');
 
         this.chat = await this.chatService.getChatById(this.chatId);
 

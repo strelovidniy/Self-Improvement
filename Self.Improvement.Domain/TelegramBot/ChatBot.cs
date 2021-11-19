@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using Microsoft.Extensions.Options;
 using Self.Improvement.Domain.Configs;
 using Telegram.Bot;
-using Telegram.Bot.Extensions.Polling;
-using Telegram.Bot.Types;
 
 namespace Self.Improvement.Domain.TelegramBot
 {

@@ -7,7 +7,6 @@ using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
