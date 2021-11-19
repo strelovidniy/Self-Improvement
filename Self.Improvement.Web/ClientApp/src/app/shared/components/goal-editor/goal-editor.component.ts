@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import ConfirmDialogComponent from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import * as uuid from 'uuid';
+import GoalStatus from '../../types/enums/goal-status.enum';
 import Goal from '../../types/goal';
 
 @Component({
@@ -28,11 +29,17 @@ export default class GoalEditorComponent implements OnInit {
         Validators.required,
     ]);
 
+    public goalDateRangeFormControl = new FormGroup({
+        start: this.goalStartDateFormControl,
+        end: this.goalEndDateFormControl
+    }, [
+        Validators.required
+    ]);
+
     public goalFormGroup = new FormGroup({
-        email: this.goalEndDateFormControl,
         name: this.goalNameFormControl,
-        telegramId: this.goalStartDateFormControl,
-        role: this.goalDescriptionFormControl,
+        decription: this.goalDescriptionFormControl,
+        dateRange: this.goalDateRangeFormControl
     });
 
     public constructor(
@@ -49,6 +56,10 @@ export default class GoalEditorComponent implements OnInit {
         }
     }
 
+    public rangeFilter(date: Date): boolean {
+        return date.getDate() >= new Date(Date.now()).getDate();
+    }
+
     public save(): void {
         if (this.goalFormGroup.valid) {
             this.dialogRef.close(this.data.edit
@@ -57,7 +68,12 @@ export default class GoalEditorComponent implements OnInit {
                     name: this.goalNameFormControl.value,
                     description: this.goalDescriptionFormControl.value,
                     startDate: new Date(this.goalStartDateFormControl.value),
-                    endDate: new Date(this.goalEndDateFormControl.value)
+                    endDate: new Date(this.goalEndDateFormControl.value),
+                    status: new Date(Date.now()).getDate() < new Date(this.goalStartDateFormControl.value).getDate()
+                        ? GoalStatus.Pending
+                        : new Date(Date.now()).getDate() > new Date(this.goalEndDateFormControl.value).getDate()
+                            ? GoalStatus.Completed
+                            : GoalStatus.Active
                 } as Goal
                 : {
                     id: uuid.NIL,
@@ -65,7 +81,12 @@ export default class GoalEditorComponent implements OnInit {
                     name: this.goalNameFormControl.value,
                     description: this.goalDescriptionFormControl.value,
                     startDate: new Date(this.goalStartDateFormControl.value),
-                    endDate: new Date(this.goalEndDateFormControl.value)
+                    endDate: new Date(this.goalEndDateFormControl.value),
+                    status: new Date(Date.now()).getDate() < new Date(this.goalStartDateFormControl.value).getDate()
+                        ? GoalStatus.Pending
+                        : new Date(Date.now()).getDate() > new Date(this.goalEndDateFormControl.value).getDate()
+                            ? GoalStatus.Completed
+                            : GoalStatus.Active
                 } as Goal);
         }
     }

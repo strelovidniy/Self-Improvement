@@ -11,44 +11,25 @@
 
     <mat-form-field>
         <mat-label>
-            Telegram ID
+            Decription
         </mat-label>
-        <input type="number" matInput [formControl]="goalTelegramIdFormControl">
+        <input matInput [formControl]="goalDescriptionFormControl">
         <mat-error>
-            Telegram ID is required
+            Decription is required
         </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-        <mat-label>
-            Email
-        </mat-label>
-        <input matInput [formControl]="goalEmailFormControl">
-        <mat-error *ngIf="userEmailFormControl.hasError('required')">
-            Email is required
-        </mat-error>
-        <mat-error *ngIf="!userEmailFormControl.hasError('required')">
-            Email is invalid
-        </mat-error>
-    </mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="goalDateRangeFormControl" [rangePicker]="picker" [dateFilter]="rangeFilter">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
 
-    <mat-form-field>
-        <mat-label>
-            Role
-        </mat-label>
-        <mat-select [formControl]="userRoleFormControl">
-            <mat-option [value]="0">
-                User
-            </mat-option>
-            <mat-option [value]="1">
-                Master
-            </mat-option>
-            <mat-option [value]="2">
-                Admin
-            </mat-option>
-        </mat-select>
         <mat-error>
-            Role is required
+            Dates are required
         </mat-error>
     </mat-form-field>
 

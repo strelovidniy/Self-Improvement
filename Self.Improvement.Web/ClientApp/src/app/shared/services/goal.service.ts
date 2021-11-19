@@ -24,4 +24,8 @@ export default class GoalService {
     public getGoalById(goalId: string): Promise<Goal> {
         return this.http.get<Goal>(`${this.endpointService.goalsUrl}${goalId}`).toPromise();
     }
+
+    public addGoal(goal: Goal): Promise<Goal> {
+        return this.http.post<Goal>(`${this.endpointService.goalsUrl}`, goal).toPromise();
+    }
 }
