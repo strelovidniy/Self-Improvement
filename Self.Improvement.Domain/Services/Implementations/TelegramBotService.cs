@@ -27,8 +27,8 @@ namespace Self.Improvement.Domain.Services.Implementations
         {
             if (update.Message != null)
             {
-                await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "What`s your name?");
                 var startMessageId = update.Message.MessageId;
+                await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "What`s your name?");
                 string name = "";
                 string email;
                 if (update.Message.MessageId != startMessageId)
