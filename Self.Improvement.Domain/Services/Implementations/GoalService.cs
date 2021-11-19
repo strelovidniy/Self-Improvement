@@ -76,13 +76,13 @@ namespace Self.Improvement.Domain.Services.Implementations
             return result;
         }
 
-        private void SetGoalStatus(Goal goal)
+        public void SetGoalStatus(Goal goal)
         {
-            if (DateTime.UtcNow < goal.StartDate)
+            if (DateTime.UtcNow < goal.StartDate && goal.Status != GoalStatus.Completed)
             {
                 goal.Status = GoalStatus.Pending;
             }
-            else if (DateTime.UtcNow > goal.StartDate && DateTime.UtcNow < goal.EndDate)
+            else if (DateTime.UtcNow > goal.StartDate && DateTime.UtcNow < goal.EndDate && goal.Status != GoalStatus.Completed)
             {
                 goal.Status = GoalStatus.Active;
             }
