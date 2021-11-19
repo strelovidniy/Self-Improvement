@@ -35,13 +35,14 @@ namespace Self.Improvement.Domain.Services.Implementations
                 {
                     name = update.Message.Text;
                     await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Ok, {name}, what is you email?");
+                    if (update.Message.Text != name)
+                    {
+                        email = update.Message.Text;
+                        await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Thank you, you are now registered!");
+                    }
                 }
 
-                if (update.Message.Text != name)
-                {
-                    email = update.Message.Text;
-                    await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Thank you, you are now registered!");
-                }
+                
             }
         }
     }
