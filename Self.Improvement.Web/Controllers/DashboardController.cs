@@ -19,7 +19,7 @@ namespace Self.Improvement.Web.Controllers
         public async Task<IActionResult> GetGoalsByUserId()
         {
             // TODO: get user id
-            Guid userId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
             var result = await _goalService.GetGoalsByUserId(userId);
 

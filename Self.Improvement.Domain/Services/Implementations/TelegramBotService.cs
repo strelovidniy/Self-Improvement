@@ -37,18 +37,20 @@ namespace Self.Improvement.Domain.Services.Implementations
 
         public async Task welcomeBack(Update update)
         {
-            KeyboardButton specialistButton = new KeyboardButton("Specialist");
-            KeyboardButton goalsButton = new KeyboardButton("Goals");
+            var specialistButton = new KeyboardButton("Specialist");
+            var goalsButton = new KeyboardButton("Goals");
             
-            List<KeyboardButton> buttonsList = new List<KeyboardButton>();
+            var buttonsList = new List<KeyboardButton>();
             
             buttonsList.Add(specialistButton);
             buttonsList.Add(goalsButton);
             
-            ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup(buttonsList);
-            keyboard.ResizeKeyboard = true;
+            var keyboard = new ReplyKeyboardMarkup(buttonsList)
+            {
+                ResizeKeyboard = true
+            };
 
-            await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Welcome back, choose what you gonna do!");
+            await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Welcome back, choose what you gonna do!", replyMarkup: keyboard);
         }
     }
 }
