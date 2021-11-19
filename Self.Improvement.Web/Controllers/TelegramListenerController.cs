@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Self.Improvement.Data.Enums;
 using Self.Improvement.Domain.Services.Interfaces;
+using Self.Improvement.Domain.TelegramBot;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Message = Self.Improvement.Data.Entities.Message;
 
@@ -15,30 +17,31 @@ namespace Self.Improvement.Web.Controllers
     public class TelegramListenerController : BaseApiController
     {
         private readonly IChatService _chatService;
-        private readonly ITelegramBotService _tgBotService;
         private readonly IBotCommandsService _botCommands;
+        private readonly ChatBot _tgBot;
 
-        public TelegramListenerController(
-            IChatService chatService,
-            ITelegramBotService tgBotService,
-            IBotCommandsService botCommands
-        )
+        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands, ChatBot chatBot) 
         {
             _chatService = chatService;
-            _tgBotService = tgBotService;
             _botCommands = botCommands;
+            _tgBot = chatBot;
+            _botCommands.InitCommands();
         }
+            
+            
 
-        [HttpPost("update"), AllowAnonymous]
+        [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
             try
             {
-                if (update.Message?.Text == _botCommands.StartCommand.Command)
+                if (update.Message.Text == "/start")
                 {
-                    _tgBotService.Authenticate(update);
-                }
-
+                    await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Heil Hitler!");
+                    _botCommands.HandleCommands(update);
+                } 
+                    
+                
                 await _chatService.SendMessageAsync(
                     new Message
                     {
