@@ -28,7 +28,7 @@ namespace Self.Improvement.Domain.Services.Implementations
         {
             if (update.Message.Text == StartCommand.Command)
             {
-                _tgService.startCommand(update, true);
+                _tgService.startCommand(update, false);
             }
         }
     }
