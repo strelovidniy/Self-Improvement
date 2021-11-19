@@ -31,7 +31,7 @@ namespace Self.Improvement.Domain.Services.Implementations
                 await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "What`s your name?");
                 string name = "";
                 string email;
-                if (update.Message.MessageId != startMessageId)
+                if (update.Message.Text != "/start")
                 {
                     name = update.Message.Text;
                     await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Ok, {name}, what is you email?");
@@ -41,8 +41,6 @@ namespace Self.Improvement.Domain.Services.Implementations
                         await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Thank you, you are now registered!");
                     }
                 }
-
-                
             }
         }
     }
