@@ -6,6 +6,7 @@ import AnimGuard from '../shared/guards/anim.guard';
 import AdminComponent from './admin.component';
 import ActionButtonsComponent from './action-buttons/action-buttons.component';
 import AdminEditorComponent from './admin-editor/admin-editor.component';
+import AdminGuard from '../shared/guards/admin.guard';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,7 @@ import AdminEditorComponent from './admin-editor/admin-editor.component';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', component: AdminComponent, pathMatch: 'full', canDeactivate: [AnimGuard] },
+            { path: '', component: AdminComponent, pathMatch: 'full', canActivate: [AdminGuard], canDeactivate: [AnimGuard] },
         ]),
     ]
 })

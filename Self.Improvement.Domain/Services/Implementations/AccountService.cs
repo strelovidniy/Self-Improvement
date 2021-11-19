@@ -11,10 +11,8 @@ namespace Self.Improvement.Domain.Services.Implementations
     {
         private readonly IUserService _userService;
 
-        public AccountService(IUserService userService)
-        {
+        public AccountService(IUserService userService) => 
             _userService = userService;
-        }
 
         public async Task CreateNewUserIfNotExistAsync(string email, string userName, CancellationToken ct)
         {
@@ -35,12 +33,14 @@ namespace Self.Improvement.Domain.Services.Implementations
         {
             var user = await _userService.GetUserByEmailIfExistAsync(email, ct);
 
-            if (user == null)
-            {
-                return null;
-            }
+            return user == null ? null : new UserAuthorizationData { UserId = user.Id, UserRole = user.Role };
+        }
 
-            return new UserAuthorizationData { UserId = user.Id, UserRole = user.Role };
+        public async Task<User> GetUserByEmailAsync(string email, CancellationToken ct)
+        {
+            var user = await _userService.GetUserByEmailIfExistAsync(email, ct);
+
+            return user;
         }
     }
 }

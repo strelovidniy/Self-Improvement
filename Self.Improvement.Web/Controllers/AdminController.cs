@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Domain.Services.Interfaces;
@@ -7,7 +8,7 @@ using Self.Improvement.Domain.Services.Interfaces;
 namespace Self.Improvement.Web.Controllers
 {
     [ApiController]
-    [Route("api/v1/admin")]
+    [Route("api/v1/admin"), Authorize(Policy = "Admin")]
     public class AdminController : BaseApiController
     {
         private readonly IUserService _userService;

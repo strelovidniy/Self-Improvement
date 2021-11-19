@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Self.Improvement.Domain.Configs;
 using Self.Improvement.Domain.Hubs;
 using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
@@ -21,25 +19,10 @@ namespace Self.Improvement.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var secOpts = Configuration
-                .GetSection("GoogleOAuthConfig")
-                .Get<GoogleOAuthConfig>();
-            
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options =>
-                {
-                    // TODO: Change to Login page
-                    options.LoginPath = "/account/google-login";
-                    options.AccessDeniedPath = "/account/google-login";
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = secOpts.ClientId;
-                    options.ClientSecret = secOpts.ClientSecret;
-                });
-                
+            services.AddGoogleAuthentication(Configuration);
+
+            services.AddGoogleAuthorization();
+
             services.AddHttpContextAccessor();
             
             services.AddControllers().AddNewtonsoftJson();
@@ -52,16 +35,16 @@ namespace Self.Improvement.Web
 
             services.AddSignalR();
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.WithOrigins("https://example.com")
-                        .AllowCredentials()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //    {
+            //        builder.WithOrigins("https://example.com")
+            //            .AllowCredentials()
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod();
+            //    });
+            //});
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
@@ -106,18 +89,7 @@ namespace Self.Improvement.Web
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                }
-            });
+            app.UseAngular(env);
         }
     }
 }

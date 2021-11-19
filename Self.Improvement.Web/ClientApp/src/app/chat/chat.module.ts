@@ -5,6 +5,7 @@ import SharedModule from '../shared/shared.module';
 import AnimGuard from '../shared/guards/anim.guard';
 import ChatComponent from './chat.component';
 import MessengerComponent from './messenger/messenger.component';
+import MasterGuard from '../shared/guards/master.guard';
 
 @NgModule({
     declarations: [
@@ -14,8 +15,8 @@ import MessengerComponent from './messenger/messenger.component';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', component: ChatComponent, pathMatch: 'full', canDeactivate: [AnimGuard] },
-            { path: ':chatId', component: MessengerComponent, pathMatch: 'preffix', canDeactivate: [AnimGuard] },
+            { path: '', component: ChatComponent, pathMatch: 'full', canActivate: [MasterGuard], canDeactivate: [AnimGuard] },
+            { path: ':chatId', component: MessengerComponent, pathMatch: 'preffix', canActivate: [MasterGuard], canDeactivate: [AnimGuard] },
         ]),
     ]
 })
