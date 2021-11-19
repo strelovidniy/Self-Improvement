@@ -33,6 +33,7 @@ namespace Self.Improvement.Web.Controllers
         {
             try
             {
+                
                 _botCommands.HandleCommands(update);
                 
                 await _chatService.SendMessageAsync(

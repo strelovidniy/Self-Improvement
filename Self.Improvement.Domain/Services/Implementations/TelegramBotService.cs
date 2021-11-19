@@ -24,6 +24,7 @@ namespace Self.Improvement.Domain.Services.Implementations
         
         public async void startCommand(Update update, bool authorized)
         {
+            await _tgBot.Client.SendTextMessageAsync(update.Message!.Chat.Id, "Hello");
             if (!authorized)
             {
                 await _tgBot.Client.SendTextMessageAsync(update.Message!.Chat.Id, "What`s your name?");
