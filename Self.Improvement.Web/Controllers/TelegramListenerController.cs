@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Self.Improvement.Data.Enums;
 using Self.Improvement.Domain.Services.Interfaces;
-using Self.Improvement.Domain.TelegramBot;
-using Telegram.Bot;
 using Telegram.Bot.Types;
 using Message = Self.Improvement.Data.Entities.Message;
 
@@ -18,13 +16,11 @@ namespace Self.Improvement.Web.Controllers
     {
         private readonly IChatService _chatService;
         private readonly IBotCommandsService _botCommands;
-        private readonly ChatBot _tgBot;
 
-        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands, ChatBot chatBot) 
+        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands)
         {
             _chatService = chatService;
             _botCommands = botCommands;
-            _tgBot = chatBot;
             _botCommands.InitCommands();
         }
             
@@ -35,12 +31,7 @@ namespace Self.Improvement.Web.Controllers
         {
             try
             {
-                if (update.Message.Text == "/start")
-                {
-                    await _tgBot.Client.SendTextMessageAsync(update.Message.Chat.Id, "Heil Hitler!");
-                    _botCommands.HandleCommands(update);
-                } 
-                    
+                _botCommands.HandleCommands(update);
                 
                 await _chatService.SendMessageAsync(
                     new Message
