@@ -1,0 +1,15 @@
+<div class="pt-30">
+    <h1>{{goal.name}}</h1>
+    <mat-progress-bar mode="determinate" [value]="getValue()"></mat-progress-bar>
+    <div>
+        <p class="goal-desc">
+            {{goal.description}}
+        </p>
+    </div>
+    <div class="button-container">
+        <div class="btn-group">
+            <button class="btn" mat-raised-button color="accent" (click)="completeGoal()">Complete goal</button>
+            <button class="btn" mat-raised-button color="warn" (click)="removeGoal()">Delete goal</button>
+        </div>
+    </div>
+</div>

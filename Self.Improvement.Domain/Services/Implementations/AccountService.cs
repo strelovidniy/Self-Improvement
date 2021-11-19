@@ -36,11 +36,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             return user == null ? null : new UserAuthorizationData { UserId = user.Id, UserRole = user.Role };
         }
 
-        public async Task<User> GetUserByEmailAsync(string email, CancellationToken ct)
-        {
-            var user = await _userService.GetUserByEmailIfExistAsync(email, ct);
-
-            return user;
-        }
+        public async Task<User> GetUserByEmailAsync(string email, CancellationToken ct) => 
+            await _userService.GetUserByEmailIfExistAsync(email, ct);
     }
 }

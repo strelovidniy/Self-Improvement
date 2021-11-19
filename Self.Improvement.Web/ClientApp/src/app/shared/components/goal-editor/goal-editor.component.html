@@ -1,0 +1,44 @@
+<form class="editor-form" (ngSubmit)="save()">
+    <mat-form-field>
+        <mat-label>
+            Name
+        </mat-label>
+        <input matInput [formControl]="goalNameFormControl">
+        <mat-error>
+            Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Decription
+        </mat-label>
+        <input matInput [formControl]="goalDescriptionFormControl">
+        <mat-error>
+            Decription is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="goalDateRangeFormControl" [rangePicker]="picker" [dateFilter]="rangeFilter">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error>
+            Dates are required
+        </mat-error>
+    </mat-form-field>
+
+    <div class="buttons-container">
+        <button mat-button type="button" (click)="discard()">
+            Discard
+        </button>
+        <button mat-button type="submit">
+            Save
+        </button>
+    </div>
+</form>
