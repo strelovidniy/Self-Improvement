@@ -11,7 +11,7 @@ using Message = Self.Improvement.Data.Entities.Message;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [Route("api/v1/telegram-listener")]
+    [Route("api/v1/telegram-listener"), AllowAnonymous]
     public class TelegramListenerController : BaseApiController
     {
         private readonly IChatService _chatService;

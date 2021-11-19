@@ -55,6 +55,6 @@ export default class DashboardComponent implements AfterViewInit {
     }
 
     private async loadData (): Promise<void> {
-        this.goals = await this.goalService.getActiveGoalsByUserId(this.user.id);
+        this.goals = await this.goalService.getGoalsByUserId(this.user.id);
     }
 }
