@@ -15,7 +15,7 @@ namespace Self.Improvement.Web.Controllers
         public GoalController(IGoalService goalService) =>
             _goalService = goalService;
 
-        [HttpGet("{userId:guid}")]
+        [HttpGet("by-user/{userId:guid}")]
         public async Task<IActionResult> GetGoalsByUserIdAsync(Guid userId) => 
             Ok(await _goalService.GetGoalsByUserIdAsync(userId));
 
