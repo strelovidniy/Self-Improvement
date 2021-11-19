@@ -12,7 +12,7 @@ namespace Self.Improvement.Domain.Services.Implementations
         private readonly ITelegramBotService _tgService;
         private readonly IChatService _chatService;
 
-        private bool _isAuthorized = false;
+        private bool _isAuthorized = true;
 
         private bool _isChating;
 
