@@ -17,15 +17,18 @@ namespace Self.Improvement.Domain.Services.Implementations
         public GoalService(IRepository<Goal> goalRepository) =>
             _goalRepository = goalRepository;
 
-        public async Task<Goal> GetGoalById(Guid goalId) =>
+        public async Task<Goal> GetGoalByIdAsync(Guid goalId) =>
             await _goalRepository.GetByIdAsync(goalId);
 
-        public async Task<IEnumerable<Goal>> GetGoalsByUserId(Guid userId) =>
+        public async Task<IEnumerable<Goal>> GetGoalsByUserIdAsync(Guid userId) =>
             await _goalRepository.Query().Where(goal => goal.UserId == userId).ToListAsync();
 
-        public async Task<Goal> UpdateGoal(Goal goal)
+        public async Task<IEnumerable<Goal>> GetActiveGoalsByUserIdAsync(Guid userId) =>
+            await _goalRepository.Query().Where(goal => goal.UserId == userId && goal.Status == GoalStatus.Active).ToListAsync();
+
+        public async Task<Goal> UpdateGoalAsync(Goal goal)
         {
-            var updatingGoal = await GetGoalById(goal.Id);
+            var updatingGoal = await GetGoalByIdAsync(goal.Id);
 
             if (updatingGoal == null) return null;
 
@@ -39,7 +42,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             return updatingGoal;
         }
 
-        public async Task<Goal> UpdateGoalStatus(Guid goalId, GoalStatus goalStatus)
+        public async Task<Goal> UpdateGoalStatusAsync(Guid goalId, GoalStatus goalStatus)
         {
             var updatingGoal = await _goalRepository.GetByIdAsync(goalId);
 
@@ -52,7 +55,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             return updatingGoal;
         }
 
-        public async Task<Goal> AddGoal(Goal goal)
+        public async Task<Goal> AddGoalAsync(Goal goal)
         {
             var addedGoal = await _goalRepository.AddAsync(goal);
 
@@ -61,9 +64,9 @@ namespace Self.Improvement.Domain.Services.Implementations
             return addedGoal;
         }
 
-        public async Task<bool> RemoveGoalById(Guid goalId)
+        public async Task<bool> RemoveGoalByIdAsync(Guid goalId)
         {
-            var result = await _goalRepository.DeleteAsync(await GetGoalById(goalId));
+            var result = await _goalRepository.DeleteAsync(await GetGoalByIdAsync(goalId));
 
             await _goalRepository.SaveChangesAsync();
 

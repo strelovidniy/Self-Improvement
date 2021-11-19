@@ -15,7 +15,7 @@ export default class AdminGuard implements CanActivate {
     public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
         const user = await this.loginService.getUser();
 
-        if (!user) location.href = location.origin + '/api/v1/account/google-login';
+        if (!user) this.loginService.login();
 
         if (user.role === UserRole.Admin) return true;
 

@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import ConfirmDialogComponent from './components/confirm-dialog/confirm-dialog.component';
+import { GoalCardComponent } from './components/goal-card/goal-card.component';
 
 import MaterialModule from './material.module';
 
 @NgModule({
     declarations: [
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        GoalCardComponent
     ],
     imports: [
         FormsModule,

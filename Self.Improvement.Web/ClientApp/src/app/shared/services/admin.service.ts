@@ -13,19 +13,19 @@ export default class AdminService {
         private http: HttpClient
     ) { }
 
-    public async getUsers(): Promise<User[]> {
+    public getUsers(): Promise<User[]> {
         return this.http.get<User[]>(`${this.endpointService.adminUrl}users`).toPromise();
     }
 
-    public async addUser(user: User): Promise<User> {
+    public addUser(user: User): Promise<User> {
         return this.http.post<User>(`${this.endpointService.adminUrl}users`, user).toPromise();
     }
 
-    public async updateUser(user: User): Promise<User> {
+    public updateUser(user: User): Promise<User> {
         return this.http.put<User>(`${this.endpointService.adminUrl}users`, user).toPromise();
     }
 
-    public async removeUser(user: User): Promise<boolean> {
+    public removeUser(user: User): Promise<boolean> {
         return this.http.delete<boolean>(`${this.endpointService.adminUrl}users/${user.id}`).toPromise();
     }
 }

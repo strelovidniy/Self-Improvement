@@ -92,7 +92,7 @@ namespace Self.Improvement.Domain.Services.Implementations
 
             if (chat is not null) return chat.Id;
 
-            var userId = await _userService.GetUserIdByTelegramIdAsync(telegramChatId);
+            var userId = (await _userService.GetUserByTelegramIdAsync(telegramChatId)).Id;
 
             chat = await _chatRepository.AddAsync(new Chat
             {

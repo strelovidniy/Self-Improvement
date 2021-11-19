@@ -8,11 +8,12 @@ namespace Self.Improvement.Domain.Services.Interfaces
 {
     public interface IGoalService
     {
-        public Task<Goal> GetGoalById(Guid goalId);
-        public Task<IEnumerable<Goal>> GetGoalsByUserId(Guid userId);
-        public Task<Goal> UpdateGoal (Goal goal);
-        public Task<Goal> UpdateGoalStatus (Guid goalId, GoalStatus goalStatus);
-        public Task<Goal> AddGoal (Goal goal);
-        public Task<bool> RemoveGoalById (Guid goalId);
+        public Task<Goal> GetGoalByIdAsync(Guid goalId);
+        public Task<IEnumerable<Goal>> GetGoalsByUserIdAsync(Guid userId);
+        public Task<IEnumerable<Goal>> GetActiveGoalsByUserIdAsync(Guid userId);
+        public Task<Goal> UpdateGoalAsync (Goal goal);
+        public Task<Goal> UpdateGoalStatusAsync (Guid goalId, GoalStatus goalStatus);
+        public Task<Goal> AddGoalAsync (Goal goal);
+        public Task<bool> RemoveGoalByIdAsync (Guid goalId);
     }
 }

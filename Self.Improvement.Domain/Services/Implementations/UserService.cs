@@ -24,12 +24,10 @@ namespace Self.Improvement.Domain.Services.Implementations
                 .IncludeGoals()
                 .FirstOrDefaultAsync(user => user.Id == userId);
 
-        public async Task<Guid> GetUserIdByTelegramIdAsync(int userTelegramId) =>
-            (
-                await _userRepository
+        public async Task<User> GetUserByTelegramIdAsync(int userTelegramId) =>
+            await _userRepository
                 .Query()
-                .FirstOrDefaultAsync(user => user.TelegramId == userTelegramId)
-            ).Id;
+                .FirstOrDefaultAsync(user => user.TelegramId == userTelegramId);
 
         public async Task<IEnumerable<User>> GetAllAsync() =>
             await _userRepository.Query().ToListAsync();

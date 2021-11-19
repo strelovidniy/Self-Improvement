@@ -1,0 +1,63 @@
+<form class="editor-form" (ngSubmit)="save()">
+    <mat-form-field>
+        <mat-label>
+            Name
+        </mat-label>
+        <input matInput [formControl]="goalNameFormControl">
+        <mat-error>
+            Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Telegram ID
+        </mat-label>
+        <input type="number" matInput [formControl]="goalTelegramIdFormControl">
+        <mat-error>
+            Telegram ID is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Email
+        </mat-label>
+        <input matInput [formControl]="goalEmailFormControl">
+        <mat-error *ngIf="userEmailFormControl.hasError('required')">
+            Email is required
+        </mat-error>
+        <mat-error *ngIf="!userEmailFormControl.hasError('required')">
+            Email is invalid
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>
+            Role
+        </mat-label>
+        <mat-select [formControl]="userRoleFormControl">
+            <mat-option [value]="0">
+                User
+            </mat-option>
+            <mat-option [value]="1">
+                Master
+            </mat-option>
+            <mat-option [value]="2">
+                Admin
+            </mat-option>
+        </mat-select>
+        <mat-error>
+            Role is required
+        </mat-error>
+    </mat-form-field>
+
+    <div class="buttons-container">
+        <button mat-button type="button" (click)="discard()">
+            Discard
+        </button>
+        <button mat-button type="submit">
+            Save
+        </button>
+    </div>
+</form>
