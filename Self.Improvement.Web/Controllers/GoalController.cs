@@ -35,8 +35,8 @@ namespace Self.Improvement.Web.Controllers
         public async Task<IActionResult> UpdateGoalAsync([FromBody] Goal goal) =>
             Ok(await _goalService.UpdateGoalAsync(goal));
 
-        [HttpPut("{goalId:guid}/{goalStatus}")]
-        public async Task<IActionResult> UpdateGoalStatusAsync(Guid goalId, GoalStatus goalStatus) =>
+        [HttpPut("{goalId:guid}")]
+        public async Task<IActionResult> UpdateGoalStatusAsync(Guid goalId, [FromBody]GoalStatus goalStatus) =>
             Ok(await _goalService.UpdateGoalStatusAsync(goalId, goalStatus));
 
 

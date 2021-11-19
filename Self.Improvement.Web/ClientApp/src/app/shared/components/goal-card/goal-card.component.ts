@@ -15,4 +15,12 @@ export class GoalCardComponent {
 
         return delta / range * 100;
     }
+
+    public removeGoal(): void {
+
+    }
+
+    public completeGoal(): void {
+
+    }
 }

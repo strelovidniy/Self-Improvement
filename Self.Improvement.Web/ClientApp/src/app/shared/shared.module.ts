@@ -26,7 +26,8 @@ import MaterialModule from './material.module';
         MaterialModule,
         CommonModule,
         RouterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        GoalCardComponent,
     ]
 })
 export default class SharedModule { }
