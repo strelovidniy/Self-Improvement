@@ -24,7 +24,7 @@ namespace Self.Improvement.Web.ServiceExtensions
             services.AddTransient<IAccountService, AccountService>();
             
             services.AddTransient<ITelegramBotService, TelegramBotService>();
-            services.AddSingleton<IBotCommandsService, BotCommandsService>();
+            services.AddSingleton<IBotHandlerService, BotHandlerService>();
             services.AddSingleton(provider => new ChatBot(provider.GetService<IOptions<ChatBotConfig>>()));
         }
     }

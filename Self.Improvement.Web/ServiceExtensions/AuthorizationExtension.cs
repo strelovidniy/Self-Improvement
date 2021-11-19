@@ -34,7 +34,7 @@ namespace Self.Improvement.Web.ServiceExtensions
 
             services.ConfigureApplicationCookie(o =>
             {
-                o.Events = new CookieAuthenticationEvents()
+                o.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = ctx =>
                     {

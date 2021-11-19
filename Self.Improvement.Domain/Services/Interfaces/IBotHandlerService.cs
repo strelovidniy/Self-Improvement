@@ -1,11 +1,12 @@
+using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
 namespace Self.Improvement.Domain.Services.Interfaces
 {
-    public interface IBotCommandsService
+    public interface IBotHandlerService
     {
         public BotCommand StartCommand { get; set; }
         public void InitCommands();
-        public void HandleCommands(Update update);
+        public Task HandleMessagesAsync(Update update, string hostUrl);
     }
 }

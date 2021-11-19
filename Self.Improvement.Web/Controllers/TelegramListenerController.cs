@@ -15,37 +15,21 @@ namespace Self.Improvement.Web.Controllers
     public class TelegramListenerController : BaseApiController
     {
         private readonly IChatService _chatService;
-        private readonly IBotCommandsService _botCommands;
+        private readonly IBotHandlerService _botHandler;
 
-        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands)
+        public TelegramListenerController(IChatService chatService, IBotHandlerService botHandler)
         {
             _chatService = chatService;
-            _botCommands = botCommands;
-            _botCommands.InitCommands();
+            _botHandler = botHandler;
+            _botHandler.InitCommands();
         }
-            
-            
 
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
             try
             {
-                _botCommands.HandleCommands(update);
-                
-                await _chatService.SendMessageAsync(
-                    new Message
-                    {
-                        ChatId = await _chatService.GetChatIdByTelegramIdAsync((int)update.Message.Chat.Id),
-                        Date = DateTime.Now,
-                        FromBot = true,
-                        Id = new Guid(),
-                        Status = MessageStatus.Unread,
-                        TelegramChatId = (int)update.Message.Chat.Id,
-                        Text = update.Message.Text,
-                    },
-                    GetHostUrl()
-                );
+                _botHandler.HandleMessagesAsync(update, GetHostUrl());
 
                 return Ok(update.Message.Text);
             }

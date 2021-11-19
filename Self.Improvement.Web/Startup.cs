@@ -1,3 +1,4 @@
+using System;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Self.Improvement.Domain.Hubs;
 using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
-using System;
 
 namespace Self.Improvement.Web
 {
