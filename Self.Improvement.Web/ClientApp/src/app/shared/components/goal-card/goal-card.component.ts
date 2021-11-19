@@ -15,7 +15,7 @@ export class GoalCardComponent {
         if (this.goal.status == GoalStatus.Pending) return 0;
 
         const delta = new Date(this.goal.startDate).getTime() - new Date(Date.now()).getTime();
-        const range = new Date(this.goal.startDate).getTime() - new Date(this.goal.endDate).getTime();
+        const range = new Date(this.goal.startDate).getTime() - new Date(this.goal.endDate).getTime() - (1000 * 60 * 60 * 24);
 
         return delta / range * 100;
     }
