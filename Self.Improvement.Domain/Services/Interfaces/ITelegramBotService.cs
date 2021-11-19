@@ -4,6 +4,6 @@ namespace Self.Improvement.Domain.Services.Interfaces
 {
     public interface ITelegramBotService
     {
-        public void Authenticate(Update update);
+        public void startCommand(Update update, bool autorized);
     }
 }

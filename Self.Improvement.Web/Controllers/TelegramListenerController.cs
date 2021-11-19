@@ -17,14 +17,13 @@ namespace Self.Improvement.Web.Controllers
     public class TelegramListenerController : BaseApiController
     {
         private readonly IChatService _chatService;
-        private readonly ITelegramBotService _tgBotService;
         private readonly IBotCommandsService _botCommands;
 
-        public TelegramListenerController(IChatService chatService, ITelegramBotService tgBotService, IBotCommandsService botCommands)
+        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands)
         {
             _chatService = chatService;
-            _tgBotService = tgBotService;
             _botCommands = botCommands;
+            _botCommands.InitCommands();
         }
             
             
@@ -34,10 +33,7 @@ namespace Self.Improvement.Web.Controllers
         {
             try
             {
-                if (update.Message?.Text == _botCommands.StartCommand.Command)
-                { 
-                    _tgBotService.Authenticate(update);
-                }
+                _botCommands.HandleCommands(update);
                 
                 await _chatService.SendMessageAsync(
                     new Message
