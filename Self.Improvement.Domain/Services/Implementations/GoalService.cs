@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Enums;
@@ -59,6 +60,8 @@ namespace Self.Improvement.Domain.Services.Implementations
         {
             var addedGoal = await _goalRepository.AddAsync(goal);
 
+            BackgroundJob.Schedule(() => SetGoalStatus(goal), TimeSpan.FromDays(1));
+
             await _goalRepository.SaveChangesAsync();
 
             return addedGoal;
@@ -71,6 +74,22 @@ namespace Self.Improvement.Domain.Services.Implementations
             await _goalRepository.SaveChangesAsync();
 
             return result;
+        }
+
+        private void SetGoalStatus(Goal goal)
+        {
+            if (DateTime.UtcNow < goal.StartDate)
+            {
+                goal.Status = GoalStatus.Pending;
+            }
+            else if (DateTime.UtcNow > goal.StartDate && DateTime.UtcNow < goal.EndDate)
+            {
+                goal.Status = GoalStatus.Active;
+            }
+            else
+            {
+                goal.Status = GoalStatus.Completed;
+            }
         }
     }
 }
