@@ -27,8 +27,6 @@ namespace Self.Improvement.Web.Controllers
             _tgBot = chatBot;
             _botCommands.InitCommands();
         }
-            
-            
 
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
