@@ -130,6 +130,7 @@
     },
     "defaultProject": "Self.Improvement.Web",
     "cli": {
+      "analytics": "418fc643-63b7-4d22-9caf-985436609c06",
         "defaultCollection": "@angular-eslint/schematics"
     }
 }

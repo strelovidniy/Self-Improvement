@@ -1,3 +1,5 @@
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Self.Improvement.Domain.Hubs;
 using Self.Improvement.Web.Middleware;
 using Self.Improvement.Web.ServiceExtensions;
+using System;
 
 namespace Self.Improvement.Web
 {
@@ -34,6 +37,21 @@ namespace Self.Improvement.Web
             services.ConfigureDbContext();
 
             services.AddSignalR();
+
+            services.AddHangfire(configuration => configuration
+               .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+               .UseSimpleAssemblyNameTypeSerializer()
+               .UseRecommendedSerializerSettings()
+               .UseSqlServerStorage(Configuration.GetConnectionString("SelfImprovementDatabase"), new SqlServerStorageOptions
+               {
+                   CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                   SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                   QueuePollInterval = TimeSpan.Zero,
+                   UseRecommendedIsolationLevel = true,
+                   DisableGlobalLocks = true
+               }));
+
+            services.AddHangfireServer();
 
             //services.AddCors(options =>
             //{
@@ -74,12 +92,15 @@ namespace Self.Improvement.Web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseHangfireDashboard();
+
             app.UseRouting();
 
             app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
             
             app.UseEndpoints(endpoints =>
             {
@@ -87,6 +108,7 @@ namespace Self.Improvement.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHangfireDashboard();
             });
 
             app.UseAngular(env);
