@@ -10,7 +10,7 @@ using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [AllowAnonymous, Route("account")]
+    [Route("api/v1/account"), AllowAnonymous]
     public class AccountController : BaseApiController
     {
         private readonly string _userEmail;
@@ -23,25 +23,29 @@ namespace Self.Improvement.Web.Controllers
         }
         
         [Route("google-login")]
-        public IActionResult GoogleLogin()
+        public IActionResult GoogleLoginAsync()
         {
             var authProperties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
             return Challenge(authProperties, GoogleDefaults.AuthenticationScheme);
         }
         
         [Route("google-response")]
-        public async Task<IActionResult> GoogleResponse(CancellationToken ct)
+        public async Task<IActionResult> GoogleResponseAsync(CancellationToken ct)
         {
             await _accountService.CreateNewUserIfNotExistAsync(User.FindFirst(ClaimTypes.Email)?.Value,
                 User.FindFirst(ClaimTypes.Name)?.Value, ct);
-            return RedirectPermanent($"{GetHostUrl()}");
+            return RedirectPermanent(GetHostUrl());
         }
-        
+
         [Route("permission")]
-        public async Task<IActionResult> CheckGetUserPermission(CancellationToken ct)
+        public async Task<IActionResult> CheckGetUserPermissionAsync(CancellationToken ct)
         {
             var authorizationData = await _accountService.GetUserAuthorizationDataAsync(_userEmail, ct);
             return authorizationData is not null ? Ok(authorizationData) : Unauthorized();
         }
+
+        [Route("current-user")]
+        public async Task<IActionResult> GetCurrentUserAsync(CancellationToken ct) =>
+            Ok(await _accountService.GetUserByEmailAsync(_userEmail, ct));
     }
 }
