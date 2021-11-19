@@ -11,34 +11,30 @@ using Message = Self.Improvement.Data.Entities.Message;
 
 namespace Self.Improvement.Web.Controllers
 {
+    [ApiController]
+    //[Authorize]
     [Route("api/v1/telegram-listener")]
     public class TelegramListenerController : BaseApiController
     {
         private readonly IChatService _chatService;
-        private readonly ITelegramBotService _tgBotService;
         private readonly IBotCommandsService _botCommands;
 
-        public TelegramListenerController(
-            IChatService chatService,
-            ITelegramBotService tgBotService,
-            IBotCommandsService botCommands
-        )
+        public TelegramListenerController(IChatService chatService, IBotCommandsService botCommands)
         {
             _chatService = chatService;
-            _tgBotService = tgBotService;
             _botCommands = botCommands;
+            _botCommands.InitCommands();
         }
+            
+            
 
-        [HttpPost("update"), AllowAnonymous]
+        [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] Update update, CancellationToken cancellationToken)
         {
             try
             {
-                if (update.Message?.Text == _botCommands.StartCommand.Command)
-                {
-                    _tgBotService.Authenticate(update);
-                }
-
+                _botCommands.HandleCommands(update);
+                
                 await _chatService.SendMessageAsync(
                     new Message
                     {
