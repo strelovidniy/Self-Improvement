@@ -1,1 +1,15 @@
-<p>goal-card works!</p>
+<div class="pt-30">
+    <h1>{{goal.name}}</h1>
+    <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+    <div class="button-container">
+        <div>
+            <p class="goal-desc">
+                {{goal.description}}
+            </p>
+        </div>
+        <div class="btn-group">
+            <button class="btn" mat-raised-button color="accent">Complete goal</button>
+            <button class="btn" mat-raised-button color="warn">Delete goal</button>
+        </div>
+    </div>
+</div>

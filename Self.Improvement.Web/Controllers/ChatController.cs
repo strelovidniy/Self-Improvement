@@ -1,12 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Self.Improvement.Domain.Services.Interfaces;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [Route("api/v1/chats"), Authorize(Policy = "Master")]
+    [Route("api/v1/chats")]
     public class ChatController : BaseApiController
     {
         private readonly IChatService _chatService;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import Goal from '../../types/goal';
 
 @Component({
@@ -6,12 +6,13 @@ import Goal from '../../types/goal';
     templateUrl: './goal-card.component.html',
     styleUrls: ['./goal-card.component.css']
 })
-export class GoalCardComponent implements OnInit {
+export class GoalCardComponent {
     @Input() public goal: Goal;
 
-    public constructor() { }
+    public getValue(): number {
+        const delta = new Date(this.goal.startDate).getTime() - new Date(Date.now()).getTime();
+        const range = new Date(this.goal.startDate).getTime() - new Date(this.goal.endDate).getTime();
 
-    public ngOnInit(): void {
+        return delta / range * 100;
     }
-
 }

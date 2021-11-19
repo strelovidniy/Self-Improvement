@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Self.Improvement.Web.Controllers
 {
-    [ApiController, Authorize(Policy = "User")]
+    [ApiController, Authorize]
     public class BaseApiController : ControllerBase
     {
         internal Guid GetUserId(int telegramId) => new();
