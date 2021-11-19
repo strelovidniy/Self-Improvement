@@ -3,12 +3,16 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import ConfirmDialogComponent from './components/confirm-dialog/confirm-dialog.component';
+import { GoalCardComponent } from './components/goal-card/goal-card.component';
+import GoalEditorComponent from './components/goal-editor/goal-editor.component';
 
 import MaterialModule from './material.module';
 
 @NgModule({
     declarations: [
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        GoalCardComponent,
+        GoalEditorComponent
     ],
     imports: [
         FormsModule,
@@ -22,7 +26,8 @@ import MaterialModule from './material.module';
         MaterialModule,
         CommonModule,
         RouterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        GoalCardComponent,
     ]
 })
 export default class SharedModule { }

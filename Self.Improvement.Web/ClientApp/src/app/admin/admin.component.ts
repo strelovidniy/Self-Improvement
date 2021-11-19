@@ -31,8 +31,8 @@ export default class AdminComponent implements AfterViewInit {
 
     public getUserRoleName = (role: UserRole): string => UserRole[role];
 
-    public async addUser(): Promise<void> {
-        const newUser = await this.dialog.open(AdminEditorComponent, {
+    public async addUser(): Promise<User> {
+        const newUser: User = await this.dialog.open(AdminEditorComponent, {
             width: '500px',
             data: { edit: false }
         }).afterClosed().toPromise();
@@ -47,7 +47,7 @@ export default class AdminComponent implements AfterViewInit {
     }
 
     public async editUser(user: User): Promise<User> {
-        const updatedUser = await this.dialog.open(AdminEditorComponent, {
+        const updatedUser: User = await this.dialog.open(AdminEditorComponent, {
             width: '500px',
             data: { edit: true, user: user }
         }).afterClosed().toPromise();
@@ -62,7 +62,7 @@ export default class AdminComponent implements AfterViewInit {
     }
 
     public async deleteUser(user: User): Promise<boolean> {
-        const answer = await this.dialog.open(ConfirmDialogComponent, {
+        const answer: User = await this.dialog.open(ConfirmDialogComponent, {
             width: '250px',
             data: { text: 'Are you sure you want to delete this user?' }
         }).afterClosed().toPromise();

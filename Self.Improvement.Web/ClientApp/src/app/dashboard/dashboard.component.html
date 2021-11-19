@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div class="wrapper">
+    <div *ngIf="goals.length" class="goals-wrapper">
+        <div class="goal-cart-container" *ngFor="let goal of goals">
+            <app-goal-card [goal]="goal"></app-goal-card>
+        </div>
+    </div>
+</div>

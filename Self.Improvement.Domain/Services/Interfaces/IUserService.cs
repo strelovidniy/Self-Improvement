@@ -9,7 +9,7 @@ namespace Self.Improvement.Domain.Services.Interfaces
     public interface IUserService
     {
         Task<User> GetUserByIdAsync(Guid userId);
-        Task<Guid> GetUserIdByTelegramIdAsync(int userId);
+        Task<User> GetUserByTelegramIdAsync(int userId);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> UpdateUserAsync(User user);
         Task<User> AddUserAsync(User user);

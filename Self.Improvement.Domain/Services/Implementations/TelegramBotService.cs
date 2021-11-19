@@ -22,7 +22,7 @@ namespace Self.Improvement.Domain.Services.Implementations
             _tgBot.Init(_accessToken.Value.AccessToken);
         }
         
-        public async void startCommand(Update update, bool authorized)
+        public async void StartCommandAsync(Update update, bool authorized)
         {
             await _tgBot.Client.SendTextMessageAsync(update.Message!.Chat.Id, "Hello");
             if (!authorized)
@@ -31,11 +31,11 @@ namespace Self.Improvement.Domain.Services.Implementations
             }
             else
             {
-                await welcomeBack(update);
+                await WelcomeBackAsync(update);
             }
         }
 
-        public async Task welcomeBack(Update update)
+        public async Task WelcomeBackAsync(Update update)
         {
             var specialistButton = new KeyboardButton("Specialist");
             var goalsButton = new KeyboardButton("Goals");

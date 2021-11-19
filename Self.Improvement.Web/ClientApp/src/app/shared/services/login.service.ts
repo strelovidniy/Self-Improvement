@@ -21,4 +21,8 @@ export default class LoginService {
 
         return this.user;
     }
+
+    public login(): void {
+        location.assign(`${location.origin}/api/v1/account/google-login`);
+    }
 }
