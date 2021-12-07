@@ -3,6 +3,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -101,7 +102,12 @@ namespace Self.Improvement.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Lax
+            });
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalRHub>("api/v1/chats/messages-hub");
