@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Self.Improvement.Data.Entities;
 using Self.Improvement.Data.Infrastructure;
@@ -22,9 +23,10 @@ namespace Self.Improvement.Web.ServiceExtensions
             services.AddTransient<IGoalService, GoalService>();
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IAccountService, AccountService>();
-            
+
             services.AddTransient<ITelegramBotService, TelegramBotService>();
-            services.AddSingleton<IBotHandlerService, BotHandlerService>();
+            services.AddTransient<IBotHandlerService, BotHandlerService>();
+
             services.AddSingleton(provider => new ChatBot(provider.GetService<IOptions<ChatBotConfig>>()));
         }
     }

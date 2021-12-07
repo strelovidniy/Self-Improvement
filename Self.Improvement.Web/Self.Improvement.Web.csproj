@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Self.Improvement.Data\Self.Improvement.Data.csproj" />
     <ProjectReference Include="..\Self.Improvement.Domain\Self.Improvement.Domain.csproj" />
   </ItemGroup>
 
